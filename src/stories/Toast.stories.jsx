@@ -1,20 +1,16 @@
-import React from "react"
-
-import Toast from "../components/Toast"
+import React from 'react'
+import Toast from '../components/Toast/Toast'
 
 export default {
-  title: "Components/Toast",
+  title: 'Components/Toast',
   component: Toast,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-  argTypes: {
-    backgroundColor: { control: "color" },
-  },
 }
 
-const Template = args => <Toast {...args} />
+const Template = (args) => <Toast {...args} />
 
-export const Red = Template.bind({})
+export const Simple = Template.bind({})
 
-Red.args = {
-  backgroundColor: "red",
+Simple.args = {
+  text: 'Some text',
 }

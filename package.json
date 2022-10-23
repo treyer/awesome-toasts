@@ -57,7 +57,8 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "prop-types": "^15.8.1"
+    "prop-types": "^15.8.1",
+    "uuidv4": "^6.2.13"
   },
   "scripts": {
     "storybook": "start-storybook -p 6006",
