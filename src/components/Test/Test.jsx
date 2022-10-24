@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import { POSITION_TYPE } from '../../constants/positions'
 import toaster from '../../ToastService'
 
 import ToastContainer from '../ToastContainer/ToastContainer'
@@ -32,7 +33,11 @@ function Test() {
       <button onClick={handleAddToastWithLifecycle}>
         Add Toast With Lifecycle
       </button>
-      {isContainerShown && <ToastContainer />}
+      {isContainerShown && (
+        <ToastContainer
+          position={POSITION_TYPE.BOTTOM_CENTER}
+        />
+      )}
     </React.Fragment>
   )
 }

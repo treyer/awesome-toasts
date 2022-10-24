@@ -14,7 +14,7 @@ function Toast({ id, text }) {
     <ToastWrapper>
       {text}
       <RemoveButton onClick={handleRemoveToast}>
-        x
+        ×
       </RemoveButton>
     </ToastWrapper>
   )

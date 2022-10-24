@@ -83,16 +83,18 @@ class ToastService {
   }
 
   renderToasts(hydratedToasts) {
-    if (this.renderRoot === null) {
-      this.renderRoot = ReactDOM.createRoot(
-        document.getElementById(ROOT_CONTAINER_ID),
-      )
-    }
     this.renderRoot.render(hydratedToasts)
   }
 
   dropRenderRoot() {
-    this.renderRoot = null
+    this.renderRoot.unmount()
+  }
+
+  setRenderRoot() {
+    this.renderRoot = ReactDOM.createRoot(
+      document.getElementById(ROOT_CONTAINER_ID),
+    )
+    console.log('set root')
   }
 }
 

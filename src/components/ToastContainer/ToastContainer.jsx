@@ -9,35 +9,27 @@ import {
   ROOT_ID,
 } from '../../constants/common'
 
-function ToastContainer() {
-  const getRootElement = () => {
-    const element = document.getElementById(ROOT_ID)
-    if (!element) {
-      return createRootElement()
-    } else {
-      return element
-    }
-  }
-
-  const createRootElement = () => {
-    const rootElement = document.createElement('div')
-    rootElement.id = ROOT_ID
-    document.body.append(rootElement)
-  }
+function ToastContainer({ position }) {
+  const rootElement = document.createElement('div')
+  rootElement.id = ROOT_ID
+  document.body.append(rootElement)
 
   useEffect(() => {
-    const removeRootElement = () => {
-      const element = document.getElementById(ROOT_ID)
-      if (element) element.remove()
+    toaster.setRenderRoot()
+
+    return () => {
+      const root = document.getElementById(ROOT_ID)
+      if (root) root.remove()
       toaster.dropRenderRoot()
     }
-
-    return removeRootElement
   })
 
   return ReactDOM.createPortal(
-    <ContainerWrapper id={ROOT_CONTAINER_ID} />,
-    getRootElement(),
+    <ContainerWrapper
+      id={ROOT_CONTAINER_ID}
+      data-position={position}
+    />,
+    rootElement,
   )
 }
 

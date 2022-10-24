@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 
 export const ToastWrapper = styled.div`
   position: relative;
@@ -13,4 +13,6 @@ export const RemoveButton = styled.div`
   position: absolute;
   top: 10px;
   right: 10px;
+
+  cursor: pointer;
 `
