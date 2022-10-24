@@ -25,17 +25,25 @@ class ToastService {
   }
 
   addToast(text) {
-    this.toasts.push({
-      id: uuid(),
-      text,
-    })
-    this.renderToasts(this.hydrateToasts(this.toasts))
+    const toastId = uuid()
+    if (this.toasts.length < 3) {
+      this.toasts.push({
+        id: toastId,
+        text,
+      })
+      this.renderToasts(this.hydrateToasts(this.toasts))
+    } else {
+      this.queue.push({ id: toastId, text })
+    }
   }
 
   removeToast(toastId) {
     this.toasts = this.toasts.filter(
       el => el.id !== toastId,
     )
+    if (this.queue.length > 0) {
+      this.toasts.push(this.queue.shift())
+    }
     this.renderToasts(this.hydrateToasts(this.toasts))
   }
 
@@ -62,7 +70,6 @@ class ToastService {
 
   dropRenderRoot() {
     this.renderRoot = null
-    this.toasts = []
   }
 }
 
