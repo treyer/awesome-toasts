@@ -18,12 +18,20 @@ function Test() {
     count.current = count.current + 1
   }
 
+  const handleAddToastWithLifecycle = () => {
+    toaster.addToast(`Some Text ${count.current}`, 2000)
+    count.current = count.current + 1
+  }
+
   return (
     <React.Fragment>
       <button onClick={handleShowContainer}>
         Show/Hide container
       </button>
       <button onClick={handleAddToast}>Add Toast</button>
+      <button onClick={handleAddToastWithLifecycle}>
+        Add Toast With Lifecycle
+      </button>
       {isContainerShown && <ToastContainer />}
     </React.Fragment>
   )

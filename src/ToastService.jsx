@@ -20,29 +20,52 @@ class ToastService {
     return this.instance
   }
 
-  getToasts() {
-    return this.toasts
+  getToastById(toastId) {
+    return this.toasts.find(el => el.id === toastId)
   }
 
-  addToast(text) {
+  addToast(text, lifeTime = 0) {
     const toastId = uuid()
     if (this.toasts.length < 3) {
+      const timer =
+        lifeTime > 0
+          ? setTimeout(() => {
+              this.removeToast(toastId)
+            }, lifeTime)
+          : null
       this.toasts.push({
         id: toastId,
         text,
+        timer,
       })
       this.renderToasts(this.hydrateToasts(this.toasts))
     } else {
-      this.queue.push({ id: toastId, text })
+      this.queue.push({ id: toastId, text, lifeTime })
     }
   }
 
+  addToastFromQueue(toast) {
+    const timer =
+      toast.lifeTime > 0
+        ? setTimeout(() => {
+            this.removeToast(toast.id)
+          }, toast.lifeTime)
+        : null
+    this.toasts.push({
+      id: toast.id,
+      text: toast.text,
+      timer,
+    })
+  }
+
   removeToast(toastId) {
+    const toast = this.getToastById(toastId)
+    if (toast.timer) clearTimeout(toast.timer)
     this.toasts = this.toasts.filter(
       el => el.id !== toastId,
     )
     if (this.queue.length > 0) {
-      this.toasts.push(this.queue.shift())
+      this.addToastFromQueue(this.queue.shift())
     }
     this.renderToasts(this.hydrateToasts(this.toasts))
   }
