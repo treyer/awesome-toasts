@@ -1,5 +1,7 @@
+import React from 'react'
+
 function ToastContainerInner({ toasts }) {
-  return <>{toasts.map((el) => el.toast)}</>;
+  return <React.Fragment>{toasts.map(el => el.toast)}</React.Fragment>
 }
 
-export default ToastContainerInner;
+export default ToastContainerInner

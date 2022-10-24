@@ -1,3 +1,4 @@
+import React from 'react'
 import { v4 as uuid } from 'uuid'
 import Toast from './components/Toast/Toast'
 
@@ -19,7 +20,7 @@ class ToastService {
   }
 
   notifyAll() {
-    this.subscribers.forEach((callback) => callback())
+    this.subscribers.forEach(callback => callback())
   }
 
   getToasts() {
@@ -31,7 +32,8 @@ class ToastService {
     this.toasts.push({
       id: toastId,
       toast: (
-        <Toast key={toastId} text={text} id={toastId} />
+        <Toast key={toastId} text={text}
+        id={toastId} />
       ),
     })
     this.notifyAll()
@@ -39,7 +41,7 @@ class ToastService {
 
   removeToast(toastId) {
     this.toasts = this.toasts.filter(
-      (el) => el.id !== toastId,
+      el => el.id !== toastId,
     )
     this.notifyAll()
   }

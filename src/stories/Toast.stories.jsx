@@ -7,7 +7,7 @@ export default {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 }
 
-const Template = (args) => <Toast {...args} />
+const Template = args => <Toast {...args} />
 
 export const Simple = Template.bind({})
 

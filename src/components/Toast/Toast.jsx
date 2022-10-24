@@ -1,6 +1,9 @@
-import toaster from '../../ToastService'
-import { RemoveButton, ToastWrapper } from './components'
+import React from 'react'
 import PropTypes from 'prop-types'
+
+import { RemoveButton, ToastWrapper } from './components'
+
+import toaster from '../../ToastService'
 
 function Toast({ id, text }) {
   const handleRemoveToast = () => {
