@@ -1,11 +1,16 @@
 import React from 'react'
+import ReactDOM from 'react-dom/client'
 import { v4 as uuid } from 'uuid'
+
 import Toast from './components/Toast/Toast'
+
+import { ROOT_CONTAINER_ID } from './constants/common'
 
 class ToastService {
   constructor() {
     this.toasts = []
-    this.subscribers = []
+    this.queue = []
+    this.renderRoot = null
   }
 
   static getInstance() {
@@ -15,35 +20,49 @@ class ToastService {
     return this.instance
   }
 
-  subscribe(callback) {
-    this.subscribers.push(callback)
-  }
-
-  notifyAll() {
-    this.subscribers.forEach(callback => callback())
-  }
-
   getToasts() {
     return this.toasts
   }
 
   addToast(text) {
-    const toastId = uuid()
     this.toasts.push({
-      id: toastId,
-      toast: (
-        <Toast key={toastId} text={text}
-        id={toastId} />
-      ),
+      id: uuid(),
+      text,
     })
-    this.notifyAll()
+    this.renderToasts(this.hydrateToasts(this.toasts))
   }
 
   removeToast(toastId) {
     this.toasts = this.toasts.filter(
       el => el.id !== toastId,
     )
-    this.notifyAll()
+    this.renderToasts(this.hydrateToasts(this.toasts))
+  }
+
+  hydrateToasts(toasts) {
+    return toasts.map(toast => {
+      return (
+        <Toast
+          key={toast.id}
+          id={toast.id}
+          text={toast.text}
+        />
+      )
+    })
+  }
+
+  renderToasts(hydratedToasts) {
+    if (this.renderRoot === null) {
+      this.renderRoot = ReactDOM.createRoot(
+        document.getElementById(ROOT_CONTAINER_ID),
+      )
+    }
+    this.renderRoot.render(hydratedToasts)
+  }
+
+  dropRenderRoot() {
+    this.renderRoot = null
+    this.toasts = []
   }
 }
 

@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom'
 
 import { ContainerWrapper } from './components'
 
+import toaster from '../../ToastService'
 import {
   ROOT_CONTAINER_ID,
   ROOT_ID,
-} from '../../constants/basic'
+} from '../../constants/common'
 
 function ToastContainer() {
   const getRootElement = () => {
@@ -28,6 +29,7 @@ function ToastContainer() {
     const removeRootElement = () => {
       const element = document.getElementById(ROOT_ID)
       if (element) element.remove()
+      toaster.dropRenderRoot()
     }
 
     return removeRootElement

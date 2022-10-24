@@ -7,7 +7,7 @@ export default {
   component: Toast,
 }
 
-const Template = (args) => <Toast {...args} />
+const Template = args => <Toast {...args} />
 
 export const Simple = Template.bind({})
 
