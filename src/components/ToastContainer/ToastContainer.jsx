@@ -1,28 +1,41 @@
-import React, { useEffect } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import ReactDOM from 'react-dom'
 
 import { ContainerWrapper } from './components'
 
-import toaster from '../../ToastService'
 import {
   ROOT_CONTAINER_ID,
   ROOT_ID,
 } from '../../constants/common'
 
-function ToastContainer({ position }) {
+function createRootElement(rootId) {
   const rootElement = document.createElement('div')
-  rootElement.id = ROOT_ID
+  rootElement.id = rootId
   document.body.append(rootElement)
+  return rootElement
+}
 
-  useEffect(() => {
-    toaster.setRenderRoot()
+function ToastContainer({ position, rootId = ROOT_ID }) {
+  const [rootElement, setRootElement] = useState(null)
+
+  useLayoutEffect(() => {
+    let element = document.getElementById(rootId)
+    let systemCreated = false
+
+    if (!element) {
+      systemCreated = true
+      element = createRootElement(rootId)
+    }
+    setRootElement(element)
 
     return () => {
-      const root = document.getElementById(ROOT_ID)
-      if (root) root.remove()
-      toaster.dropRenderRoot()
+      if (systemCreated && element.parentNode) {
+        element.parentNode.removeChild(element)
+      }
     }
-  })
+  }, [rootId])
+
+  if (rootElement === null) return null
 
   return ReactDOM.createPortal(
     <ContainerWrapper

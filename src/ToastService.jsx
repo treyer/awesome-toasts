@@ -10,6 +10,7 @@ class ToastService {
   constructor() {
     this.toasts = []
     this.queue = []
+    this.root = null
     this.renderRoot = null
   }
 
@@ -83,18 +84,19 @@ class ToastService {
   }
 
   renderToasts(hydratedToasts) {
+    if (!this.root) {
+      this.root = document.getElementById(ROOT_CONTAINER_ID)
+      this.renderRoot = ReactDOM.createRoot(this.root)
+    } else {
+      const currentRoot = document.getElementById(
+        ROOT_CONTAINER_ID,
+      )
+      if (currentRoot !== this.root) {
+        this.root = currentRoot
+        this.renderRoot = ReactDOM.createRoot(this.root)
+      }
+    }
     this.renderRoot.render(hydratedToasts)
-  }
-
-  dropRenderRoot() {
-    this.renderRoot.unmount()
-  }
-
-  setRenderRoot() {
-    this.renderRoot = ReactDOM.createRoot(
-      document.getElementById(ROOT_CONTAINER_ID),
-    )
-    console.log('set root')
   }
 }
 
