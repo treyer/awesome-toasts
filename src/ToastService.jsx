@@ -5,6 +5,7 @@ import { v4 as uuid } from 'uuid'
 import Toast from './components/Toast/Toast'
 
 import { ROOT_CONTAINER_ID } from './constants/common'
+import { TOAST_STATE } from './constants/toastStates'
 
 class ToastService {
   constructor() {
@@ -38,10 +39,16 @@ class ToastService {
         id: toastId,
         text,
         timer,
+        toastState: TOAST_STATE.WILL_APPEAR,
       })
       this.renderToasts(this.hydrateToasts(this.toasts))
     } else {
-      this.queue.push({ id: toastId, text, lifeTime })
+      this.queue.push({
+        id: toastId,
+        text,
+        lifeTime,
+        toastState: TOAST_STATE.WILL_APPEAR,
+      })
     }
   }
 
@@ -55,6 +62,7 @@ class ToastService {
     this.toasts.push({
       id: toast.id,
       text: toast.text,
+      toastState: this.toastState,
       timer,
     })
   }
@@ -71,6 +79,13 @@ class ToastService {
     this.renderToasts(this.hydrateToasts(this.toasts))
   }
 
+  setToastStatus(toastId, state) {
+    this.toasts.map(el => {
+      if (el.id === toastId) el.toastState = state
+      return el
+    })
+  }
+
   hydrateToasts(toasts) {
     return toasts.map(toast => {
       return (
@@ -78,6 +93,7 @@ class ToastService {
           key={toast.id}
           id={toast.id}
           text={toast.text}
+          toastState={toast.toastState}
         />
       )
     })

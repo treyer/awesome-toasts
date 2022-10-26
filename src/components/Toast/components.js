@@ -7,6 +7,11 @@ export const ToastWrapper = styled.div`
   height: 50px;
   border: 1px solid black;
   border-radius: 10px;
+  transition: transform 250ms ease-in-out;
+
+  &.hidden {
+    transform: translateX(-120%);
+  }
 `
 
 export const RemoveButton = styled.div`
