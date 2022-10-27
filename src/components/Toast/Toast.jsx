@@ -6,21 +6,25 @@ import { RemoveButton, ToastWrapper } from './components'
 import toaster from '../../ToastService'
 import { TOAST_STATE } from '../../constants/toastStates'
 
-function Toast({ id, text, toastState }) {
+function Toast({ id, text, lifeTime, toastState }) {
   const [isHidden, setIsHidden] = useState(
     toastState === TOAST_STATE.WILL_APPEAR,
   )
   const [isRemoving, setIsRemoving] = useState(false)
+  const [isOnLifetime, setIsOnLifetime] = useState(false)
 
   useEffect(() => {
     if (isHidden) {
       const timer = setTimeout(() => {
         setIsHidden(false)
         toaster.setToastStatus(id, TOAST_STATE.SHOWN)
+        if (lifeTime > 0) {
+          setIsOnLifetime(true)
+        }
       }, 250)
       return () => clearTimeout(timer)
     }
-  })
+  }, [isHidden])
 
   useEffect(() => {
     if (isRemoving) {
@@ -29,7 +33,16 @@ function Toast({ id, text, toastState }) {
       }, 250)
       return () => clearTimeout(timer)
     }
-  })
+  }, [isRemoving])
+
+  useEffect(() => {
+    if (isOnLifetime) {
+      const timer = setTimeout(() => {
+        handleRemoveToast()
+      }, lifeTime)
+      return () => clearTimeout(timer)
+    }
+  }, [isOnLifetime])
 
   const handleRemoveToast = () => {
     setIsHidden(true)

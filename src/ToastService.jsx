@@ -27,49 +27,30 @@ class ToastService {
   }
 
   addToast(text, lifeTime = 0) {
-    const toastId = uuid()
+    const toast = {
+      id: uuid(),
+      text,
+      lifeTime,
+      toastState: TOAST_STATE.WILL_APPEAR,
+    }
     if (this.toasts.length < 3) {
-      const timer =
-        lifeTime > 0
-          ? setTimeout(() => {
-              this.removeToast(toastId)
-            }, lifeTime)
-          : null
-      this.toasts.push({
-        id: toastId,
-        text,
-        timer,
-        toastState: TOAST_STATE.WILL_APPEAR,
-      })
+      this.toasts.push(toast)
       this.renderToasts(this.hydrateToasts(this.toasts))
     } else {
-      this.queue.push({
-        id: toastId,
-        text,
-        lifeTime,
-        toastState: TOAST_STATE.WILL_APPEAR,
-      })
+      this.queue.push(toast)
     }
   }
 
   addToastFromQueue(toast) {
-    const timer =
-      toast.lifeTime > 0
-        ? setTimeout(() => {
-            this.removeToast(toast.id)
-          }, toast.lifeTime)
-        : null
     this.toasts.push({
       id: toast.id,
       text: toast.text,
+      lifeTime: toast.lifeTime,
       toastState: this.toastState,
-      timer,
     })
   }
 
   removeToast(toastId) {
-    const toast = this.getToastById(toastId)
-    if (toast.timer) clearTimeout(toast.timer)
     this.toasts = this.toasts.filter(
       el => el.id !== toastId,
     )
@@ -94,6 +75,7 @@ class ToastService {
           id={toast.id}
           text={toast.text}
           toastState={toast.toastState}
+          lifeTime={toast.lifeTime}
         />
       )
     })
