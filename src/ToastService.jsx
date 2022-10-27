@@ -6,7 +6,7 @@ import Toast from '@components/Toast/Toast'
 
 import { ROOT_CONTAINER_ID } from '@constants/common'
 import { TOAST_STATE } from '@constants/toastStates'
-import { SHOW_FROM, HIDE_TO } from '@constants/directions'
+import { getDefaultDirections } from './helpers/getDefaultDirections'
 
 class ToastService {
   constructor() {
@@ -28,12 +28,13 @@ class ToastService {
     return this.toasts.find(el => el.id === toastId)
   }
 
-  addToast(
-    text,
-    lifeTime = 0,
-    showFrom = SHOW_FROM.LEFT,
-    hideTo = HIDE_TO.BOTTOM,
-  ) {
+  addToast(text, lifeTime = 0, showFrom, hideTo) {
+    if (!showFrom || !hideTo) {
+      const [showDefault, hideDefault] =
+        getDefaultDirections(this.containerPosition)
+      if (!showFrom) showFrom = showDefault
+      if (!hideTo) hideTo = hideDefault
+    }
     const toast = {
       id: uuid(),
       text,
@@ -85,6 +86,8 @@ class ToastService {
           text={toast.text}
           toastState={toast.toastState}
           lifeTime={toast.lifeTime}
+          showFrom={toast.showFrom}
+          hideTo={toast.hideTo}
         />
       )
     })

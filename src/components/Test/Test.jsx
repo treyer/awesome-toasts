@@ -1,8 +1,10 @@
 import React, { useRef, useState } from 'react'
-import { POSITION_TYPE } from '../../constants/positions'
-import toaster from '../../ToastService'
 
-import ToastContainer from '../ToastContainer/ToastContainer'
+import ToastContainer from '@components/ToastContainer/ToastContainer'
+
+import toaster from '@/ToastService'
+import { POSITION_TYPE } from '@constants/positions'
+import { SHOW_FROM, HIDE_TO } from '@constants/directions'
 
 function Test() {
   const count = useRef(0)
@@ -15,7 +17,12 @@ function Test() {
   }
 
   const handleAddToast = () => {
-    toaster.addToast(`Some Text ${count.current}`)
+    toaster.addToast(
+      `Some Text ${count.current}`,
+      undefined,
+      SHOW_FROM.TOP,
+      HIDE_TO.BOTTOM,
+    )
     count.current = count.current + 1
   }
 

@@ -6,7 +6,15 @@ import { RemoveButton, ToastWrapper } from './components'
 import toaster from '@/ToastService'
 import { TOAST_STATE } from '@constants/toastStates'
 
-function Toast({ id, text, lifeTime, toastState }) {
+function Toast({
+  id,
+  text,
+  lifeTime,
+  toastState,
+  showFrom,
+  hideTo,
+}) {
+  console.log(showFrom, hideTo)
   const [isHidden, setIsHidden] = useState(
     toastState === TOAST_STATE.WILL_APPEAR,
   )
@@ -50,7 +58,10 @@ function Toast({ id, text, lifeTime, toastState }) {
   }
 
   return (
-    <ToastWrapper className={isHidden && 'hidden'}>
+    <ToastWrapper
+      className={isHidden && 'hidden'}
+      data-show={isHidden && showFrom}
+      data-hide={isRemoving && hideTo}>
       {text}
       <RemoveButton onClick={handleRemoveToast}>
         ×

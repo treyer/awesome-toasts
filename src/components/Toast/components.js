@@ -9,8 +9,21 @@ export const ToastWrapper = styled.div`
   border-radius: 10px;
   transition: transform 250ms ease-in-out;
 
-  &.hidden {
+  &[data-show='left'].hidden,
+  &[data-hide='left'].hidden {
     transform: translateX(-120%);
+  }
+  &[data-show='right'].hidden,
+  &[data-hide='right'].hidden {
+    transform: translateX(120%);
+  }
+  &[data-show='top'].hidden,
+  &[data-hide='top'].hidden {
+    transform: translateY(-120%);
+  }
+  &[data-show='bottom'].hidden,
+  &[data-hide='bottom'].hidden {
+    transform: translateY(120%);
   }
 `
 
