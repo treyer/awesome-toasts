@@ -14,7 +14,6 @@ function Toast({
   showFrom,
   hideTo,
 }) {
-  console.log(showFrom, hideTo)
   const [isHidden, setIsHidden] = useState(
     toastState === TOAST_STATE.WILL_APPEAR,
   )

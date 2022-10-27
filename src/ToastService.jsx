@@ -28,20 +28,20 @@ class ToastService {
     return this.toasts.find(el => el.id === toastId)
   }
 
-  addToast(text, lifeTime = 0, showFrom, hideTo) {
-    if (!showFrom || !hideTo) {
-      const [showDefault, hideDefault] =
-        getDefaultDirections(this.containerPosition)
-      if (!showFrom) showFrom = showDefault
-      if (!hideTo) hideTo = hideDefault
-    }
+  addToast(headerText, text, options) {
     const toast = {
       id: uuid(),
+      headerText,
       text,
-      lifeTime,
+      lifeTime:
+        'lifeTime' in options ? options.lifeTime : 0,
       toastState: TOAST_STATE.WILL_APPEAR,
-      showFrom,
-      hideTo,
+      showFrom: options.showFrom
+        ? options.showFrom
+        : getDefaultDirections(this.containerPosition)[0],
+      hideTo: options.hideTo
+        ? options.hideTo
+        : getDefaultDirections(this.containerPosition)[1],
     }
     if (this.toasts.length < 3) {
       this.toasts.push(toast)
@@ -83,6 +83,7 @@ class ToastService {
         <Toast
           key={toast.id}
           id={toast.id}
+          headerText={toast.headerText}
           text={toast.text}
           toastState={toast.toastState}
           lifeTime={toast.lifeTime}

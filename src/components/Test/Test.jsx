@@ -18,10 +18,9 @@ function Test() {
 
   const handleAddToast = () => {
     toaster.addToast(
+      `Some Header ${count.current}`,
       `Some Text ${count.current}`,
-      undefined,
-      SHOW_FROM.TOP,
-      HIDE_TO.BOTTOM,
+      { showFrom: SHOW_FROM.TOP, hideTo: HIDE_TO.BOTTOM },
     )
     count.current = count.current + 1
   }
