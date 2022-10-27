@@ -2,10 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { v4 as uuid } from 'uuid'
 
-import Toast from './components/Toast/Toast'
+import Toast from '@components/Toast/Toast'
 
-import { ROOT_CONTAINER_ID } from './constants/common'
-import { TOAST_STATE } from './constants/toastStates'
+import { ROOT_CONTAINER_ID } from '@constants/common'
+import { TOAST_STATE } from '@constants/toastStates'
+import { SHOW_FROM, HIDE_TO } from '@constants/directions'
 
 class ToastService {
   constructor() {
@@ -13,6 +14,7 @@ class ToastService {
     this.queue = []
     this.root = null
     this.renderRoot = null
+    this.containerPosition = null
   }
 
   static getInstance() {
@@ -26,12 +28,19 @@ class ToastService {
     return this.toasts.find(el => el.id === toastId)
   }
 
-  addToast(text, lifeTime = 0) {
+  addToast(
+    text,
+    lifeTime = 0,
+    showFrom = SHOW_FROM.LEFT,
+    hideTo = HIDE_TO.BOTTOM,
+  ) {
     const toast = {
       id: uuid(),
       text,
       lifeTime,
       toastState: TOAST_STATE.WILL_APPEAR,
+      showFrom,
+      hideTo,
     }
     if (this.toasts.length < 3) {
       this.toasts.push(toast)
@@ -46,7 +55,7 @@ class ToastService {
       id: toast.id,
       text: toast.text,
       lifeTime: toast.lifeTime,
-      toastState: this.toastState,
+      toastState: toast.toastState,
     })
   }
 
@@ -95,6 +104,10 @@ class ToastService {
       }
     }
     this.renderRoot.render(hydratedToasts)
+  }
+
+  setContainerPosition(position) {
+    this.containerPosition = position
   }
 }
 

@@ -1,4 +1,8 @@
-import React, { useState, useLayoutEffect } from 'react'
+import React, {
+  useState,
+  useLayoutEffect,
+  useEffect,
+} from 'react'
 import ReactDOM from 'react-dom'
 
 import { ContainerWrapper } from './components'
@@ -6,7 +10,9 @@ import { ContainerWrapper } from './components'
 import {
   ROOT_CONTAINER_ID,
   ROOT_ID,
-} from '../../constants/common'
+} from '@constants/common'
+import { POSITION_TYPE } from '@constants/positions'
+import toaster from '@/ToastService'
 
 function createRootElement(rootId) {
   const rootElement = document.createElement('div')
@@ -15,8 +21,16 @@ function createRootElement(rootId) {
   return rootElement
 }
 
-function ToastContainer({ position, rootId = ROOT_ID }) {
+function ToastContainer({
+  position = POSITION_TYPE.TOP_RIGHT,
+  rootId = ROOT_ID,
+}) {
   const [rootElement, setRootElement] = useState(null)
+
+  useEffect(() => {
+    toaster.setContainerPosition(position)
+    return () => toaster.setContainerPosition(null)
+  }, [])
 
   useLayoutEffect(() => {
     let element = document.getElementById(rootId)

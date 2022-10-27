@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 import { RemoveButton, ToastWrapper } from './components'
 
-import toaster from '../../ToastService'
-import { TOAST_STATE } from '../../constants/toastStates'
+import toaster from '@/ToastService'
+import { TOAST_STATE } from '@constants/toastStates'
 
 function Toast({ id, text, lifeTime, toastState }) {
   const [isHidden, setIsHidden] = useState(
