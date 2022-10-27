@@ -26,7 +26,15 @@ function Test() {
   }
 
   const handleAddToastWithLifecycle = () => {
-    toaster.addToast(`Some Text ${count.current}`, 2000)
+    toaster.addToast(
+      `Some Header ${count.current}`,
+      `Some Text ${count.current}`,
+      {
+        showFrom: SHOW_FROM.TOP,
+        hideTo: HIDE_TO.BOTTOM,
+        lifeTime: 2000,
+      },
+    )
     count.current = count.current + 1
   }
 

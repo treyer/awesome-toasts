@@ -34,7 +34,9 @@ class ToastService {
       headerText,
       text,
       lifeTime:
-        'lifeTime' in options ? options.lifeTime : 0,
+        options.lifeTime !== undefined
+          ? options.lifeTime
+          : 0,
       toastState: TOAST_STATE.WILL_APPEAR,
       showFrom: options.showFrom
         ? options.showFrom
