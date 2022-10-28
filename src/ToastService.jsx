@@ -5,8 +5,7 @@ import { v4 as uuid } from 'uuid'
 import Toast from '@components/Toast/Toast'
 
 import { ROOT_CONTAINER_ID } from '@constants/common'
-import { TOAST_STATE } from '@constants/toastStates'
-import { getDefaultDirections } from './helpers/getDefaultDirections'
+import { getToastSettings } from '@helpers/getToastSettings'
 
 class ToastService {
   constructor() {
@@ -28,38 +27,26 @@ class ToastService {
     return this.toasts.find(el => el.id === toastId)
   }
 
-  addToast(headerText, text, options) {
-    const toast = {
-      id: uuid(),
-      headerText,
-      text,
-      lifeTime:
-        options.lifeTime !== undefined
-          ? options.lifeTime
-          : 0,
-      toastState: TOAST_STATE.WILL_APPEAR,
-      showFrom: options.showFrom
-        ? options.showFrom
-        : getDefaultDirections(this.containerPosition)[0],
-      hideTo: options.hideTo
-        ? options.hideTo
-        : getDefaultDirections(this.containerPosition)[1],
+  addToast(...args) {
+    const settings = getToastSettings(
+      args,
+      this.containerPosition,
+    )
+    if (settings) {
+      const { text, headerText, options } = settings
+      const toast = {
+        id: uuid(),
+        headerText,
+        text,
+        options,
+      }
+      if (this.toasts.length < 3) {
+        this.toasts.push(toast)
+        this.renderToasts(this.hydrateToasts(this.toasts))
+      } else {
+        this.queue.push(toast)
+      }
     }
-    if (this.toasts.length < 3) {
-      this.toasts.push(toast)
-      this.renderToasts(this.hydrateToasts(this.toasts))
-    } else {
-      this.queue.push(toast)
-    }
-  }
-
-  addToastFromQueue(toast) {
-    this.toasts.push({
-      id: toast.id,
-      text: toast.text,
-      lifeTime: toast.lifeTime,
-      toastState: toast.toastState,
-    })
   }
 
   removeToast(toastId) {
@@ -67,7 +54,7 @@ class ToastService {
       el => el.id !== toastId,
     )
     if (this.queue.length > 0) {
-      this.addToastFromQueue(this.queue.shift())
+      this.toasts.push(this.queue.shift())
     }
     this.renderToasts(this.hydrateToasts(this.toasts))
   }
@@ -87,10 +74,7 @@ class ToastService {
           id={toast.id}
           headerText={toast.headerText}
           text={toast.text}
-          toastState={toast.toastState}
-          lifeTime={toast.lifeTime}
-          showFrom={toast.showFrom}
-          hideTo={toast.hideTo}
+          {...toast.options}
         />
       )
     })

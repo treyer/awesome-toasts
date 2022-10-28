@@ -5,6 +5,7 @@ import ToastContainer from '@components/ToastContainer/ToastContainer'
 import toaster from '@/ToastService'
 import { POSITION_TYPE } from '@constants/positions'
 import { SHOW_FROM, HIDE_TO } from '@constants/directions'
+import { TOAST_TYPE } from '@constants/toastTypes'
 
 function Test() {
   const count = useRef(0)
@@ -18,8 +19,8 @@ function Test() {
 
   const handleAddToast = () => {
     toaster.addToast(
-      `Some Header ${count.current}`,
       `Some Text ${count.current}`,
+      `Some Header ${count.current}`,
       { showFrom: SHOW_FROM.TOP, hideTo: HIDE_TO.BOTTOM },
     )
     count.current = count.current + 1
@@ -27,12 +28,13 @@ function Test() {
 
   const handleAddToastWithLifecycle = () => {
     toaster.addToast(
-      `Some Header ${count.current}`,
       `Some Text ${count.current}`,
+      `Some Header ${count.current}`,
       {
         showFrom: SHOW_FROM.TOP,
         hideTo: HIDE_TO.BOTTOM,
         lifeTime: 2000,
+        messageType: TOAST_TYPE.INFO,
       },
     )
     count.current = count.current + 1
