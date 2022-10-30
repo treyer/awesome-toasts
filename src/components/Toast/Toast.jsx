@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { RemoveButton, ToastWrapper } from './components'
+import {
+  RemoveButton,
+  ToastInner,
+  ToastWrapper,
+} from './components'
 
 import toaster from '@/ToastService'
 import { TOAST_STATE } from '@constants/toastStates'
@@ -14,6 +18,8 @@ function Toast({
   showFrom,
   hideTo,
   bgColor,
+  margin,
+  padding,
 }) {
   const [isHidden, setIsHidden] = useState(
     toastState === TOAST_STATE.WILL_APPEAR,
@@ -62,11 +68,12 @@ function Toast({
       className={isHidden && 'hidden'}
       data-show={isHidden && showFrom}
       data-hide={isRemoving && hideTo}
-      bgColor={bgColor}>
-      {text}
+      bgColor={bgColor}
+      margin={margin}>
       <RemoveButton onClick={handleRemoveToast}>
         ×
       </RemoveButton>
+      <ToastInner padding={padding}>{text}</ToastInner>
     </ToastWrapper>
   )
 }

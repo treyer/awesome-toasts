@@ -24,6 +24,7 @@ function Test() {
       {
         showFrom: SHOW_FROM.TOP,
         hideTo: HIDE_TO.BOTTOM,
+        margin: 'lg sm 12 12',
       },
     )
     count.current = count.current + 1

@@ -5,6 +5,7 @@ export const ToastWrapper = styled.div`
 
   width: 250px;
   height: 50px;
+  margin: ${({ margin }) => margin};
 
   border: 1px solid black;
   border-radius: 10px;
@@ -36,4 +37,8 @@ export const RemoveButton = styled.div`
   right: 10px;
 
   cursor: pointer;
+`
+
+export const ToastInner = styled.div`
+  padding: ${({ padding }) => padding};
 `

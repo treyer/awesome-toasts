@@ -1,7 +1,10 @@
 import { TOAST_STATE } from '@constants/toastStates'
 import { TOAST_TYPE_COLORS } from '@constants/colors'
 import { TOAST_TYPE } from '@constants/toastTypes'
+import { INDENTS } from '@constants/indents'
 import { getDefaultDirections } from '@helpers/getDefaultDirections'
+import { arrayToString } from '@helpers/arrayToString'
+import { setIndents } from './calculateIndents'
 
 const validOptionKeys = [
   'lifeTime',
@@ -9,6 +12,8 @@ const validOptionKeys = [
   'hideTo',
   'type',
   'bgColor',
+  'padding',
+  'margin',
 ]
 
 const methodSignature =
@@ -28,6 +33,8 @@ export const getToastSettings = (
     showFrom,
     hideTo,
     bgColor: TOAST_TYPE_COLORS[TOAST_TYPE.DEFAULT],
+    margin: `${INDENTS.SM}px`,
+    padding: `${INDENTS.SM}px`,
   }
 
   args = args.slice(0, 4)
@@ -69,7 +76,7 @@ export const getToastSettings = (
       options: isObject(args[1])
         ? {
             ...defaultOptions,
-            ...setBgColor(fixOptions(args[1])),
+            ...setIndents(setBgColor(fixOptions(args[1]))),
           }
         : defaultOptions,
     }
@@ -80,7 +87,7 @@ export const getToastSettings = (
       text: args[0],
       options: {
         ...defaultOptions,
-        ...setBgColor(fixOptions(args[2])),
+        ...setIndents(setBgColor(fixOptions(args[2]))),
       },
     }
   }
@@ -132,12 +139,4 @@ const setBgColor = options => {
     delete options.type
   }
   return options
-}
-
-const arrayToString = arr => {
-  return arr.reduce(
-    (res, el, index) =>
-      (res += index !== 0 ? `, "${el}"` : `"${el}"`),
-    '',
-  )
 }
