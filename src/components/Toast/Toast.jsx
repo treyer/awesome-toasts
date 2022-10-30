@@ -13,6 +13,7 @@ function Toast({
   toastState,
   showFrom,
   hideTo,
+  bgColor,
 }) {
   const [isHidden, setIsHidden] = useState(
     toastState === TOAST_STATE.WILL_APPEAR,
@@ -60,7 +61,8 @@ function Toast({
     <ToastWrapper
       className={isHidden && 'hidden'}
       data-show={isHidden && showFrom}
-      data-hide={isRemoving && hideTo}>
+      data-hide={isRemoving && hideTo}
+      bgColor={bgColor}>
       {text}
       <RemoveButton onClick={handleRemoveToast}>
         ×

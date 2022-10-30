@@ -5,8 +5,11 @@ export const ToastWrapper = styled.div`
 
   width: 250px;
   height: 50px;
+
   border: 1px solid black;
   border-radius: 10px;
+  background-color: ${({ bgColor }) => bgColor};
+
   transition: transform 250ms ease-in-out;
 
   &[data-show='left'].hidden,

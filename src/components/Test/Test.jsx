@@ -21,7 +21,10 @@ function Test() {
     toaster.addToast(
       `Some Text ${count.current}`,
       `Some Header ${count.current}`,
-      { showFrom: SHOW_FROM.TOP, hideTo: HIDE_TO.BOTTOM },
+      {
+        showFrom: SHOW_FROM.TOP,
+        hideTo: HIDE_TO.BOTTOM,
+      },
     )
     count.current = count.current + 1
   }
@@ -34,7 +37,7 @@ function Test() {
         showFrom: SHOW_FROM.TOP,
         hideTo: HIDE_TO.BOTTOM,
         lifeTime: 2000,
-        messageType: TOAST_TYPE.INFO,
+        type: TOAST_TYPE.DANGER,
       },
     )
     count.current = count.current + 1

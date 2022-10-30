@@ -1,11 +1,14 @@
 import { TOAST_STATE } from '@constants/toastStates'
+import { TOAST_TYPE_COLORS } from '@constants/colors'
+import { TOAST_TYPE } from '@constants/toastTypes'
 import { getDefaultDirections } from '@helpers/getDefaultDirections'
 
 const validOptionKeys = [
   'lifeTime',
   'showFrom',
   'hideTo',
-  'backgroundColor',
+  'type',
+  'bgColor',
 ]
 
 const methodSignature =
@@ -24,6 +27,7 @@ export const getToastSettings = (
     toastState: TOAST_STATE.WILL_APPEAR,
     showFrom,
     hideTo,
+    bgColor: TOAST_TYPE_COLORS[TOAST_TYPE.DEFAULT],
   }
 
   args = args.slice(0, 4)
@@ -63,7 +67,10 @@ export const getToastSettings = (
         typeof args[1] === 'string' ? args[1] : null,
       text: args[0],
       options: isObject(args[1])
-        ? { ...defaultOptions, ...fixOptions(args[1]) }
+        ? {
+            ...defaultOptions,
+            ...setBgColor(fixOptions(args[1])),
+          }
         : defaultOptions,
     }
   }
@@ -73,7 +80,7 @@ export const getToastSettings = (
       text: args[0],
       options: {
         ...defaultOptions,
-        ...fixOptions(args[2]),
+        ...setBgColor(fixOptions(args[2])),
       },
     }
   }
@@ -103,6 +110,28 @@ const fixOptions = obj => {
     )
   }
   return obj
+}
+
+const setBgColor = options => {
+  if ('bgColor' in options) {
+    if ('type' in options) {
+      delete options.type
+    }
+  } else if ('type' in options) {
+    if (Object.values(TOAST_TYPE).includes(options.type)) {
+      options.bgColor = TOAST_TYPE_COLORS[options.type]
+    } else {
+      console.error(
+        `Wrong "type" option value "${
+          options.type
+        }". Available values:${arrayToString(
+          Object.values(TOAST_TYPE),
+        )}`,
+      )
+    }
+    delete options.type
+  }
+  return options
 }
 
 const arrayToString = arr => {
