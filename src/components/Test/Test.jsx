@@ -25,10 +25,10 @@ function Test() {
         showFrom: SHOW_FROM.TOP,
         hideTo: HIDE_TO.BOTTOM,
         margin: 'lg sm 12 12',
-        padding: 'lg',
-        type: 'aas',
-        animationType: 'ease-in-o',
-        // bgColor: '#ffffff',
+        // padding: 'lg',
+        type: TOAST_TYPE.WARNING,
+        // animationType: 'ease-in',
+        // bgColor: 'grey',
       },
     )
     count.current = count.current + 1
@@ -39,10 +39,10 @@ function Test() {
       `Some Text ${count.current}`,
       `Some Header ${count.current}`,
       {
-        showFrom: SHOW_FROM.TOP,
-        hideTo: HIDE_TO.BOTTOM,
+        showFrom: SHOW_FROM.RIGHT,
+        hideTo: HIDE_TO.LEFT,
         lifeTime: 2000,
-        type: TOAST_TYPE.DANGER,
+        type: TOAST_TYPE.INFO,
       },
     )
     count.current = count.current + 1

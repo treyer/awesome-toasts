@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import Icon from '../Icon/Icon.js'
 import {
   Body,
   Header,
+  IconWrapper,
+  MainWrapper,
   RemoveButton,
   ToastInner,
   ToastWrapper,
@@ -77,8 +80,13 @@ function Toast({
       bgColor={bgColor}
       margin={margin}>
       <ToastInner padding={padding}>
-        {headerText && <Header>{headerText}</Header>}
-        <Body>{text}</Body>
+        <IconWrapper>
+          <Icon type={type} />
+        </IconWrapper>
+        <MainWrapper>
+          {headerText && <Header>{headerText}</Header>}
+          <Body>{text}</Body>
+        </MainWrapper>
       </ToastInner>
       <RemoveButton onClick={handleRemoveToast}>
         ×

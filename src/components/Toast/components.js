@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const ToastWrapper = styled.div`
   position: relative;
 
-  width: 250px;
+  width: 320px;
   min-height: 50px;
   margin: ${({ margin }) => margin};
 
@@ -11,25 +11,30 @@ export const ToastWrapper = styled.div`
   border-radius: 10px;
   background-color: ${({ bgColor }) => bgColor};
   box-shadow: 0px 4px 24px -8px rgba(0, 0, 0, 0.75);
+  opacity: 1;
 
-  transition: transform 250ms
+  transition: all 250ms
     ${({ animationType }) => animationType};
 
   &[data-show='left'].hidden,
   &[data-hide='left'].hidden {
     transform: translateX(-120%);
+    opacity: 0.6;
   }
   &[data-show='right'].hidden,
   &[data-hide='right'].hidden {
     transform: translateX(120%);
+    opacity: 0.6;
   }
   &[data-show='top'].hidden,
   &[data-hide='top'].hidden {
     transform: translateY(-120%);
+    opacity: 0.6;
   }
   &[data-show='bottom'].hidden,
   &[data-hide='bottom'].hidden {
     transform: translateY(120%);
+    opacity: 0.6;
   }
 `
 
@@ -51,10 +56,18 @@ export const RemoveButton = styled.div`
 `
 
 export const ToastInner = styled.div`
-  display: flex,
-  flex-direction: column;
+  display: flex;
 
   padding: ${({ padding }) => padding};
+`
+
+export const IconWrapper = styled.div`
+  position: relative;
+  width: 30px;
+`
+
+export const MainWrapper = styled.div`
+  width: calc(100% - 30px);
 `
 
 export const Header = styled.div`
