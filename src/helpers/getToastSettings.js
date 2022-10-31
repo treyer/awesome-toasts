@@ -2,21 +2,14 @@ import { TOAST_STATE } from '@constants/toastStates'
 import { TOAST_TYPE_COLORS } from '@constants/colors'
 import { TOAST_TYPE } from '@constants/toastTypes'
 import { INDENTS } from '@constants/indents'
-import { ANIMATION_TYPES , CUBIC_BEZIER_FN } from '@constants/animationTypes'
+import { ANIMATION_TYPES } from '@constants/animationTypes'
 import { getDefaultDirections } from '@helpers/getDefaultDirections'
-import { arrayToString } from '@helpers/arrayToString'
 import { setIndents } from '@helpers/calculateIndents'
-
-const validOptionKeys = [
-  'lifeTime',
-  'showFrom',
-  'hideTo',
-  'type',
-  'bgColor',
-  'padding',
-  'margin',
-  'animationType',
-]
+import { fixOptions } from '@helpers/fixOptions'
+import { isObject } from '@helpers/isObject'
+import { fixToastType } from '@helpers/fixToastType'
+import { checkAndFixAnimationType } from '@helpers/checkAndFixAnimationType'
+import { setBgColor } from '@helpers/setBgColor'
 
 const methodSignature =
   'addToast(toastText [, toastHeader [, optionsObject]])'
@@ -103,80 +96,4 @@ const checkAndFixOptions = optionsObj => {
       setBgColor(fixToastType(fixOptions(optionsObj))),
     ),
   )
-}
-
-const fixOptions = obj => {
-  const wrongKeys = []
-  Object.keys(obj).forEach(key => {
-    if (!validOptionKeys.includes(key)) {
-      wrongKeys.push(key)
-      delete obj[key]
-    }
-  })
-  if (wrongKeys.length > 0) {
-    const text =
-      wrongKeys.length === 1 ? 'option key' : 'options keys'
-    console.error(
-      `Unsupported ${text}: ${arrayToString(
-        wrongKeys,
-      )}. Available keys: ${arrayToString(
-        validOptionKeys,
-      )}`,
-    )
-  }
-  return obj
-}
-
-const fixToastType = options => {
-  if ('type' in options) {
-    if (!Object.values(TOAST_TYPE).includes(options.type)) {
-      console.error(
-        `Wrong "type" option value "${
-          options.type
-        }". Available values:${arrayToString(
-          Object.values(TOAST_TYPE),
-        )}`,
-      )
-      delete options.type
-    }
-  }
-  return options
-}
-
-const setBgColor = options => {
-  if (!('bgColor' in options) && 'type' in options) {
-    options.bgColor = TOAST_TYPE_COLORS[options.type]
-  }
-  return options
-}
-
-const checkAndFixAnimationType = options => {
-  if ('animationType' in options) {
-    if (
-      !Object.values(ANIMATION_TYPES).includes(
-        options.animationType,
-      )
-    ) {
-      console.error(
-        `Wrong "animationType" option value "${
-          options.animationType
-        }". Available values: ${arrayToString(
-          Object.values(ANIMATION_TYPES),
-        )}.`,
-      )
-      delete options.animationType
-    } else {
-      if (
-        options.animationType ===
-        ANIMATION_TYPES.CUBIC_BEZIER
-      ) {
-        options.animationType = CUBIC_BEZIER_FN
-      }
-    }
-  }
-  return options
-}
-
-const isObject = value => {
-  return value !== null && typeof value === 'object'
 }

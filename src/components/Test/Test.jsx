@@ -26,8 +26,8 @@ function Test() {
         hideTo: HIDE_TO.BOTTOM,
         margin: 'lg sm 12 12',
         padding: 'lg',
-        type: TOAST_TYPE.WARNING,
-        animationType: 'ease-in-out',
+        type: 'aas',
+        animationType: 'ease-in-o',
         // bgColor: '#ffffff',
       },
     )
