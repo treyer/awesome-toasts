@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { v4 as uuid } from 'uuid'
 
 import Toast from '@components/Toast/Toast.jsx'
+import { ErrorBoundary } from '@components/ErrorBoundary/ErrorBoundary.jsx'
 
 import { ROOT_CONTAINER_ID } from '@constants/common.js'
 import { getToastSettings } from '@helpers/getToastSettings.js'
@@ -67,17 +68,21 @@ class ToastService {
   }
 
   hydrateToasts(toasts) {
-    return toasts.map(toast => {
-      return (
-        <Toast
-          key={toast.id}
-          id={toast.id}
-          headerText={toast.headerText}
-          text={toast.text}
-          {...toast.options}
-        />
-      )
-    })
+    return (
+      <ErrorBoundary>
+        {toasts.map(toast => {
+          return (
+            <Toast
+              key={toast.id}
+              id={toast.id}
+              headerText={toast.headerText}
+              text={toast.text}
+              {...toast.options}
+            />
+          )
+        })}
+      </ErrorBoundary>
+    )
   }
 
   renderToasts(hydratedToasts) {

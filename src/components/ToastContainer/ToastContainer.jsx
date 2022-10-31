@@ -5,6 +5,7 @@ import React, {
 } from 'react'
 import ReactDOM from 'react-dom'
 
+import { ErrorBoundary } from '@components/ErrorBoundary/ErrorBoundary.jsx'
 import { ContainerWrapper } from './components'
 
 import {
@@ -52,10 +53,12 @@ function ToastContainer({
   if (rootElement === null) return null
 
   return ReactDOM.createPortal(
-    <ContainerWrapper
-      id={ROOT_CONTAINER_ID}
-      data-position={position}
-    />,
+    <ErrorBoundary>
+      <ContainerWrapper
+        id={ROOT_CONTAINER_ID}
+        data-position={position}
+      />
+    </ErrorBoundary>,
     rootElement,
   )
 }
