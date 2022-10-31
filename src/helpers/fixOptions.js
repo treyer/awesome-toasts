@@ -1,4 +1,4 @@
-import { arrayToString } from '@helpers/arrayToString'
+import { arrayToString } from '@helpers/arrayToString.js'
 
 const validOptionKeys = [
   'lifeTime',

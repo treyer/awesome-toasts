@@ -9,8 +9,8 @@ import {
   ToastWrapper,
 } from './components'
 
-import toaster from '@/ToastService'
-import { TOAST_STATE } from '@constants/toastStates'
+import toaster from '@/ToastService.jsx'
+import { TOAST_STATE } from '@constants/toastStates.js'
 
 function Toast({
   id,

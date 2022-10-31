@@ -2,10 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { v4 as uuid } from 'uuid'
 
-import Toast from '@components/Toast/Toast'
+import Toast from '@components/Toast/Toast.jsx'
 
-import { ROOT_CONTAINER_ID } from '@constants/common'
-import { getToastSettings } from '@helpers/getToastSettings'
+import { ROOT_CONTAINER_ID } from '@constants/common.js'
+import { getToastSettings } from '@helpers/getToastSettings.js'
 
 class ToastService {
   constructor() {

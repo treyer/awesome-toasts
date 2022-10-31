@@ -1,5 +1,5 @@
-import ToastContainer from './components/ToastContainer'
+import ToastContainer from '@components/ToastContainer/ToastContainer.jsx'
 
-import toaster from './ToastService'
+import toaster from '@/ToastService.jsx'
 
 export { toaster, ToastContainer }

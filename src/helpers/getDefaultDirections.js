@@ -1,5 +1,8 @@
-import { POSITION_TYPE } from '@constants/positions'
-import { HIDE_TO, SHOW_FROM } from '@constants/directions'
+import { POSITION_TYPE } from '@constants/positions.js'
+import {
+  HIDE_TO,
+  SHOW_FROM,
+} from '@constants/directions.js'
 
 export const getDefaultDirections = containerPosition => {
   switch (containerPosition) {

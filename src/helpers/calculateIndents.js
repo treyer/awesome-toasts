@@ -1,5 +1,5 @@
-import { INDENTS } from '@constants/indents'
-import { arrayToString } from '@helpers/arrayToString'
+import { INDENTS } from '@constants/indents.js'
+import { arrayToString } from '@helpers/arrayToString.js'
 
 export const setIndents = options => {
   if (options.margin) {

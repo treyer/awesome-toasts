@@ -1,8 +1,8 @@
 import {
   ANIMATION_TYPES,
   CUBIC_BEZIER_FN,
-} from '@constants/animationTypes'
-import { arrayToString } from '@helpers/arrayToString'
+} from '@constants/animationTypes.js'
+import { arrayToString } from '@helpers/arrayToString.js'
 
 export const checkAndFixAnimationType = options => {
   if ('animationType' in options) {

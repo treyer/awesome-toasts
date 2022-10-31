@@ -10,9 +10,9 @@ import { ContainerWrapper } from './components'
 import {
   ROOT_CONTAINER_ID,
   ROOT_ID,
-} from '@constants/common'
-import { POSITION_TYPE } from '@constants/positions'
-import toaster from '@/ToastService'
+} from '@constants/common.js'
+import { POSITION_TYPE } from '@constants/positions.js'
+import toaster from '@/ToastService.jsx'
 
 function createRootElement(rootId) {
   const rootElement = document.createElement('div')

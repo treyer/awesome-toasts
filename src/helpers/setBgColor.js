@@ -1,4 +1,4 @@
-import { TOAST_TYPE_COLORS } from '@constants/colors'
+import { TOAST_TYPE_COLORS } from '@constants/colors.js'
 
 export const setBgColor = options => {
   if (!('bgColor' in options) && 'type' in options) {

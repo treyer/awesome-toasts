@@ -1,5 +1,5 @@
-import { TOAST_TYPE } from '@constants/toastTypes'
-import { arrayToString } from '@helpers/arrayToString'
+import { TOAST_TYPE } from '@constants/toastTypes.js'
+import { arrayToString } from '@helpers/arrayToString.js'
 
 export const fixToastType = options => {
   if ('type' in options) {
