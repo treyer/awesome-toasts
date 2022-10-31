@@ -14,15 +14,17 @@ import { TOAST_STATE } from '@constants/toastStates'
 
 function Toast({
   id,
+  toastState,
   text,
   headerText,
+  type,
   lifeTime,
-  toastState,
   showFrom,
   hideTo,
   bgColor,
   margin,
   padding,
+  animationType,
 }) {
   const [isHidden, setIsHidden] = useState(
     toastState === TOAST_STATE.WILL_APPEAR,
@@ -71,6 +73,7 @@ function Toast({
       className={isHidden && 'hidden'}
       data-show={isHidden && showFrom}
       data-hide={isRemoving && hideTo}
+      animationType={animationType}
       bgColor={bgColor}
       margin={margin}>
       <ToastInner padding={padding}>

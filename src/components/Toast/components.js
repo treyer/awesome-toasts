@@ -12,7 +12,8 @@ export const ToastWrapper = styled.div`
   background-color: ${({ bgColor }) => bgColor};
   box-shadow: 0px 4px 24px -8px rgba(0, 0, 0, 0.75);
 
-  transition: transform 250ms ease-in-out;
+  transition: transform 250ms
+    ${({ animationType }) => animationType};
 
   &[data-show='left'].hidden,
   &[data-hide='left'].hidden {
@@ -63,11 +64,14 @@ export const Header = styled.div`
 
   &::after {
     content: ' ';
+
     position: absolute;
     bottom: -3px;
     right: 0px;
+
     width: 100%;
     height: 2px;
+
     background-color: #b8b8b8;
     opacity: 0.4;
   }

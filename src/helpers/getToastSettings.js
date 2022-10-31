@@ -2,9 +2,10 @@ import { TOAST_STATE } from '@constants/toastStates'
 import { TOAST_TYPE_COLORS } from '@constants/colors'
 import { TOAST_TYPE } from '@constants/toastTypes'
 import { INDENTS } from '@constants/indents'
+import { ANIMATION_TYPES , CUBIC_BEZIER_FN } from '@constants/animationTypes'
 import { getDefaultDirections } from '@helpers/getDefaultDirections'
 import { arrayToString } from '@helpers/arrayToString'
-import { setIndents } from './calculateIndents'
+import { setIndents } from '@helpers/calculateIndents'
 
 const validOptionKeys = [
   'lifeTime',
@@ -14,6 +15,7 @@ const validOptionKeys = [
   'bgColor',
   'padding',
   'margin',
+  'animationType',
 ]
 
 const methodSignature =
@@ -30,11 +32,13 @@ export const getToastSettings = (
   const defaultOptions = {
     lifeTime: 0,
     toastState: TOAST_STATE.WILL_APPEAR,
+    type: TOAST_TYPE.DEFAULT,
     showFrom,
     hideTo,
     bgColor: TOAST_TYPE_COLORS[TOAST_TYPE.DEFAULT],
     margin: `${INDENTS.SM}px`,
     padding: `${INDENTS.SM}px`,
+    animationType: ANIMATION_TYPES.EASE_IN_OUT,
   }
 
   args = args.slice(0, 4)
@@ -76,7 +80,7 @@ export const getToastSettings = (
       options: isObject(args[1])
         ? {
             ...defaultOptions,
-            ...setIndents(setBgColor(fixOptions(args[1]))),
+            ...checkAndFixOptions(args[1]),
           }
         : defaultOptions,
     }
@@ -87,14 +91,18 @@ export const getToastSettings = (
       text: args[0],
       options: {
         ...defaultOptions,
-        ...setIndents(setBgColor(fixOptions(args[2]))),
+        ...checkAndFixOptions(args[2]),
       },
     }
   }
 }
 
-const isObject = value => {
-  return value !== null && typeof value === 'object'
+const checkAndFixOptions = optionsObj => {
+  return checkAndFixAnimationType(
+    setIndents(
+      setBgColor(fixToastType(fixOptions(optionsObj))),
+    ),
+  )
 }
 
 const fixOptions = obj => {
@@ -119,15 +127,9 @@ const fixOptions = obj => {
   return obj
 }
 
-const setBgColor = options => {
-  if ('bgColor' in options) {
-    if ('type' in options) {
-      delete options.type
-    }
-  } else if ('type' in options) {
-    if (Object.values(TOAST_TYPE).includes(options.type)) {
-      options.bgColor = TOAST_TYPE_COLORS[options.type]
-    } else {
+const fixToastType = options => {
+  if ('type' in options) {
+    if (!Object.values(TOAST_TYPE).includes(options.type)) {
       console.error(
         `Wrong "type" option value "${
           options.type
@@ -135,8 +137,46 @@ const setBgColor = options => {
           Object.values(TOAST_TYPE),
         )}`,
       )
+      delete options.type
     }
-    delete options.type
   }
   return options
+}
+
+const setBgColor = options => {
+  if (!('bgColor' in options) && 'type' in options) {
+    options.bgColor = TOAST_TYPE_COLORS[options.type]
+  }
+  return options
+}
+
+const checkAndFixAnimationType = options => {
+  if ('animationType' in options) {
+    if (
+      !Object.values(ANIMATION_TYPES).includes(
+        options.animationType,
+      )
+    ) {
+      console.error(
+        `Wrong "animationType" option value "${
+          options.animationType
+        }". Available values: ${arrayToString(
+          Object.values(ANIMATION_TYPES),
+        )}.`,
+      )
+      delete options.animationType
+    } else {
+      if (
+        options.animationType ===
+        ANIMATION_TYPES.CUBIC_BEZIER
+      ) {
+        options.animationType = CUBIC_BEZIER_FN
+      }
+    }
+  }
+  return options
+}
+
+const isObject = value => {
+  return value !== null && typeof value === 'object'
 }

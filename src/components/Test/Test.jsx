@@ -20,13 +20,15 @@ function Test() {
   const handleAddToast = () => {
     toaster.addToast(
       `Some Text Some Text Some Text Some Text Some Text Some Text Some Text${count.current}`,
-      // `Some Header ${count.current}`,
+      `Some Header ${count.current}`,
       {
         showFrom: SHOW_FROM.TOP,
         hideTo: HIDE_TO.BOTTOM,
         margin: 'lg sm 12 12',
         padding: 'lg',
-        // type: TOAST_TYPE.DANGER,
+        type: TOAST_TYPE.WARNING,
+        animationType: 'ease-in-out',
+        // bgColor: '#ffffff',
       },
     )
     count.current = count.current + 1
