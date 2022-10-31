@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import Icon from '../Icon/Icon.js'
+import Icon from '../Icon/Icon.jsx'
 import {
   Body,
   Header,
