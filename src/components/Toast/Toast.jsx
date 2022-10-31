@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import {
+  Body,
+  Header,
   RemoveButton,
   ToastInner,
   ToastWrapper,
@@ -13,6 +15,7 @@ import { TOAST_STATE } from '@constants/toastStates'
 function Toast({
   id,
   text,
+  headerText,
   lifeTime,
   toastState,
   showFrom,
@@ -70,10 +73,13 @@ function Toast({
       data-hide={isRemoving && hideTo}
       bgColor={bgColor}
       margin={margin}>
+      <ToastInner padding={padding}>
+        {headerText && <Header>{headerText}</Header>}
+        <Body>{text}</Body>
+      </ToastInner>
       <RemoveButton onClick={handleRemoveToast}>
         ×
       </RemoveButton>
-      <ToastInner padding={padding}>{text}</ToastInner>
     </ToastWrapper>
   )
 }
