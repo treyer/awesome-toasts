@@ -4,28 +4,20 @@ import React, {
   useEffect,
 } from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 
-import { ErrorBoundary } from '@components/ErrorBoundary/ErrorBoundary.jsx'
 import { ContainerWrapper } from './components'
+import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary.jsx'
 
 import {
   ROOT_CONTAINER_ID,
   ROOT_ID,
 } from '@constants/common.js'
+import { createRootElement } from '@helpers/createRootElement.js'
 import { POSITION_TYPE } from '@constants/positions.js'
 import toaster from '@/ToastService.jsx'
 
-function createRootElement(rootId) {
-  const rootElement = document.createElement('div')
-  rootElement.id = rootId
-  document.body.append(rootElement)
-  return rootElement
-}
-
-function ToastContainer({
-  position = POSITION_TYPE.TOP_RIGHT,
-  rootId = ROOT_ID,
-}) {
+function ToastContainer({ position, rootId }) {
   const [rootElement, setRootElement] = useState(null)
 
   useEffect(() => {
@@ -61,6 +53,23 @@ function ToastContainer({
     </ErrorBoundary>,
     rootElement,
   )
+}
+
+ToastContainer.propTypes = {
+  position: PropTypes.oneOf([
+    POSITION_TYPE.TOP_RIGHT,
+    POSITION_TYPE.TOP_CENTER,
+    POSITION_TYPE.TOP_LEFT,
+    POSITION_TYPE.BOTTOM_RIGHT,
+    POSITION_TYPE.BOTTOM_CENTER,
+    POSITION_TYPE.BOTTOM_LEFT,
+  ]),
+  rootId: PropTypes.string,
+}
+
+ToastContainer.defaultProps = {
+  position: POSITION_TYPE.TOP_RIGHT,
+  rootId: ROOT_ID,
 }
 
 export default ToastContainer

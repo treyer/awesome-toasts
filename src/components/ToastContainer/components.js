@@ -6,7 +6,7 @@ export const ContainerWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 250px;
+  width: 320px;
 
   &[data-position^='top-'] {
     top: 0;
@@ -17,11 +17,11 @@ export const ContainerWrapper = styled.div`
   }
 
   &[data-position$='-right'] {
-    right: 0;
+    right: 10px;
   }
 
   &[data-position$='-left'] {
-    left: 0;
+    left: 10px;
   }
 
   &[data-position$='-center'] {

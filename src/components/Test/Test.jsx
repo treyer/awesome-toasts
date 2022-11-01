@@ -59,7 +59,7 @@ function Test() {
       </button>
       {isContainerShown && (
         <ToastContainer
-          position={POSITION_TYPE.BOTTOM_CENTER}
+          position={POSITION_TYPE.TOP_CENTER}
         />
       )}
     </React.Fragment>

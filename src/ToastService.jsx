@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { v4 as uuid } from 'uuid'
 
 import Toast from '@components/Toast/Toast.jsx'
-import { ErrorBoundary } from '@components/ErrorBoundary/ErrorBoundary.jsx'
+import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary.jsx'
 
 import { ROOT_CONTAINER_ID } from '@constants/common.js'
 import { getToastSettings } from '@helpers/getToastSettings.js'

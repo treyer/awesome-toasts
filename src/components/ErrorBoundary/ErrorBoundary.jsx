@@ -1,6 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-export class ErrorBoundary extends React.Component {
+class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props)
     this.state = { error: null, errorInfo: null }
@@ -18,12 +19,12 @@ export class ErrorBoundary extends React.Component {
       return (
         <React.Fragment>
           <h3>Something went wrong with Toasts.</h3>
-          {/* <details style={{ whiteSpace: 'pre-wrap' }}>
+          <details style={{ whiteSpace: 'pre-wrap' }}>
             {this.state.error &&
               this.state.error.toString()}
             <br />
             {this.state.errorInfo.componentStack}
-          </details> */}
+          </details>
         </React.Fragment>
       )
     }
@@ -31,3 +32,12 @@ export class ErrorBoundary extends React.Component {
     return this.props.children
   }
 }
+
+ErrorBoundary.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+}
+
+export default ErrorBoundary
