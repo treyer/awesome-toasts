@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import Icon from '../Icon/Icon.jsx'
@@ -23,6 +23,7 @@ import {
   ANIMATION_TYPES,
   CUBIC_BEZIER_FN,
 } from '@constants/animationTypes.js'
+import { getPositionX } from '@helpers/getPositionX.js'
 
 function Toast({
   id,
@@ -43,6 +44,10 @@ function Toast({
   )
   const [isRemoving, setIsRemoving] = useState(false)
   const [isOnLifetime, setIsOnLifetime] = useState(false)
+  const [isOnDrag, setIsOnDrag] = useState(false)
+  const [positionDiff, setPositionDiff] = useState(0)
+  const [opacity, setOpacity] = useState(1)
+  const initialPositionX = useRef(null)
 
   useEffect(() => {
     if (isHidden) {
@@ -80,6 +85,30 @@ function Toast({
     setIsRemoving(true)
   }
 
+  const initDragToRemove = event => {
+    setIsOnDrag(true)
+    initialPositionX.current = getPositionX(event)
+  }
+
+  const updateDragToRemove = event => {
+    event.preventDefault()
+    if (isOnDrag) {
+      const diff =
+        getPositionX(event) - initialPositionX.current
+      if (Math.abs(diff) >= 150) toaster.removeToast(id)
+      setPositionDiff(diff)
+      let opacity = 1 - Math.abs(diff) / 150
+      if (opacity < 0) opacity = 0
+      setOpacity(opacity)
+    }
+  }
+
+  const resetDragToRemove = () => {
+    setIsOnDrag(false)
+    setPositionDiff(0)
+    initialPositionX.current = null
+  }
+
   return (
     <ToastWrapper
       className={isHidden && 'hidden'}
@@ -87,7 +116,16 @@ function Toast({
       data-hide={isRemoving && hideTo}
       animationType={animationType}
       bgColor={bgColor}
-      margin={margin}>
+      margin={margin}
+      positionDiff={positionDiff}
+      opacity={opacity}
+      onMouseDown={initDragToRemove}
+      onTouchStart={initDragToRemove}
+      onMouseMove={updateDragToRemove}
+      onTouchMove={updateDragToRemove}
+      onMouseUp={resetDragToRemove}
+      onMouseLeave={resetDragToRemove}
+      onTouchEnd={resetDragToRemove}>
       <ToastInner padding={padding}>
         <IconWrapper>
           <Icon type={type} />

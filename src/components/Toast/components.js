@@ -11,10 +11,16 @@ export const ToastWrapper = styled.div`
   border-radius: 10px;
   background-color: ${({ bgColor }) => bgColor};
   box-shadow: 0px 4px 24px -8px rgba(0, 0, 0, 0.75);
-  opacity: 1;
+  opacity: ${({ opacity }) => opacity};
 
+  transform: translateX(
+    ${({ positionDiff }) => positionDiff}px
+  );
   transition: all 250ms
     ${({ animationType }) => animationType};
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 
   &[data-show='left'].hidden,
   &[data-hide='left'].hidden {
