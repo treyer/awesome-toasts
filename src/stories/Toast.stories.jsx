@@ -5,10 +5,7 @@ import Toast from '@components/Toast/Toast'
 import { TOAST_TYPE } from '@constants/toastTypes'
 import { SHOW_FROM, HIDE_TO } from '@constants/directions'
 import { POSITION_TYPE } from '@constants/positions'
-import {
-  ANIMATION_TYPES,
-  CUBIC_BEZIER_FN,
-} from '@constants/animationTypes'
+import { ANIMATION_TYPES } from '@constants/animationTypes'
 import ToastContainer from '@components/ToastContainer/ToastContainer'
 import toaster from '@/ToastService.jsx'
 
@@ -77,6 +74,12 @@ export default {
     bgColor: {
       control: { type: 'color' },
     },
+    fontColor: {
+      control: { type: 'color' },
+    },
+    iconColor: {
+      control: { type: 'color' },
+    },
     margin: {
       control: { type: 'text' },
     },
@@ -92,7 +95,7 @@ export default {
         ANIMATION_TYPES.LINEAR,
         ANIMATION_TYPES.STEP_START,
         ANIMATION_TYPES.STEP_END,
-        CUBIC_BEZIER_FN,
+        ANIMATION_TYPES.CUBIC_BEZIER,
       ],
       control: { type: 'select' },
     },
@@ -105,8 +108,14 @@ const Template = ({
   headerText,
   ...rest
 }) => {
-  if (rest.bgColor && rest.bgColor.length === 0) {
+  if (rest.bgColor && rest.bgColor === 'none') {
     delete rest.bgColor
+  }
+  if (rest.fontColor && rest.fontColor === 'none') {
+    delete rest.fontColor
+  }
+  if (rest.iconColor && rest.iconColor === 'none') {
+    delete rest.iconColor
   }
 
   const showToast = () => {
@@ -129,6 +138,9 @@ Simple.args = {
   lifeTime: 0,
   showFrom: SHOW_FROM.LEFT,
   hideTo: HIDE_TO.RIGHT,
+  bgColor: 'none',
+  fontColor: 'none',
+  iconColor: 'none',
   margin: '5',
   padding: '5',
   animationType: ANIMATION_TYPES.EASE_IN_OUT,

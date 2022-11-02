@@ -35,6 +35,8 @@ function Toast({
   showFrom,
   hideTo,
   bgColor,
+  fontColor,
+  iconColor,
   margin,
   padding,
   animationType,
@@ -116,6 +118,7 @@ function Toast({
       data-hide={isRemoving && hideTo}
       animationType={animationType}
       bgColor={bgColor}
+      fontColor={fontColor}
       margin={margin}
       positionDiff={positionDiff}
       opacity={opacity}
@@ -128,7 +131,7 @@ function Toast({
       onTouchEnd={resetDragToRemove}>
       <ToastInner padding={padding}>
         <IconWrapper>
-          <Icon type={type} />
+          <Icon type={type} iconColor={iconColor} />
         </IconWrapper>
         <MainWrapper>
           {headerText && <Header>{headerText}</Header>}
@@ -171,6 +174,8 @@ Toast.propTypes = {
     HIDE_TO.BOTTOM,
   ]).isRequired,
   bgColor: PropTypes.string.isRequired,
+  fontColor: PropTypes.string.isRequired,
+  iconColor: PropTypes.string.isRequired,
   margin: PropTypes.string.isRequired,
   padding: PropTypes.string.isRequired,
   animationType: PropTypes.oneOf([

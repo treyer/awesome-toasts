@@ -5,6 +5,8 @@ const validOptionKeys = [
   'showFrom',
   'hideTo',
   'type',
+  'fontColor',
+  'iconColor',
   'bgColor',
   'padding',
   'margin',

@@ -7,9 +7,10 @@ export const ToastWrapper = styled.div`
   min-height: 50px;
   margin: ${({ margin }) => margin};
 
+  color: ${({ fontColor }) => fontColor};
+  background-color: ${({ bgColor }) => bgColor};
   border: 1px solid #d0d0d0;
   border-radius: 10px;
-  background-color: ${({ bgColor }) => bgColor};
   box-shadow: 0px 4px 24px -8px rgba(0, 0, 0, 0.75);
   opacity: ${({ opacity }) => opacity};
 
@@ -18,6 +19,7 @@ export const ToastWrapper = styled.div`
   );
   transition: all 250ms
     ${({ animationType }) => animationType};
+
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;

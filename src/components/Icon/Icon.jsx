@@ -6,9 +6,9 @@ import { Wrapper } from './components'
 import { ICONS } from '@constants/icons.js'
 import { TOAST_TYPE } from '@constants/toastTypes.js'
 
-function Icon({ type }) {
+function Icon({ type, iconColor }) {
   return (
-    <Wrapper type={type}>
+    <Wrapper iconColor={iconColor}>
       <path d={ICONS[type]} />
     </Wrapper>
   )
@@ -22,6 +22,7 @@ Icon.propTypes = {
     TOAST_TYPE.DANGER,
     TOAST_TYPE.WARNING,
   ]).isRequired,
+  iconColor: PropTypes.string.isRequired,
 }
 
 export default Icon
