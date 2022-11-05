@@ -108,6 +108,7 @@ function Toast({
   const resetDragToRemove = () => {
     setIsOnDrag(false)
     setPositionDiff(0)
+    setOpacity(1)
     initialPositionX.current = null
   }
 

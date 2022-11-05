@@ -9,8 +9,7 @@ import { fixOptions } from '@helpers/fixOptions.js'
 import { isObject } from '@helpers/isObject.js'
 import { fixToastType } from '@helpers/fixToastType.js'
 import { checkAndFixAnimationType } from '@helpers/checkAndFixAnimationType.js'
-import { setBgColor } from '@helpers/setBgColor.js'
-import { setFontAndIconColors } from '@helpers/setFontAndIconColors.js'
+import { checkAndFixColorOptions } from './checkAndFixColorOptions'
 
 const methodSignature =
   'addToast(toastText [, toastHeader [, optionsObject]])'
@@ -94,8 +93,8 @@ export const getToastSettings = (
 const checkAndFixOptions = optionsObj => {
   return checkAndFixAnimationType(
     setIndents(
-      setFontAndIconColors(
-        setBgColor(fixToastType(fixOptions(optionsObj))),
+      checkAndFixColorOptions(
+        fixToastType(fixOptions(optionsObj)),
       ),
     ),
   )
