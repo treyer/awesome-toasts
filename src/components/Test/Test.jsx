@@ -29,6 +29,7 @@ function Test() {
         type: TOAST_TYPE.WARNING,
         // animationType: 'ease-in',
         // bgColor: 'grey',
+        lifeTime: '2000',
       },
     )
     count.current = count.current + 1
