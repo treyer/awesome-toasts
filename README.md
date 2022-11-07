@@ -1,112 +1,106 @@
-# Tестовое задание библиотека Toast
+<h1 align="center">Welcome to react-toaster-lib 👋</h1>
+<p>
+  <a href="https://www.npmjs.com/package/react-toaster-lib" target="_blank">
+    <img alt="Version" src="https://img.shields.io/npm/v/react-toaster-lib.svg">
+  </a>
+  <a href="#" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+  </a>
+</p>
 
-## Содержание
+> React toast library
 
-- [Техническое задание](#Техническое-задание)
-- [Используемые технологии](#Используемые-технологии)
-- [Структура проекта](#Структура-проекта)
-- [Тестирование](#Тестирование)
-- [Как начать](#Как-начать)
-- [Полезные ссылки](#Полезные-ссылки)
+### 🏠 [Homepage](https://github.com/treyer/awesome-toasts)
 
-## Техническое задание
-Необходимо реализовать ***Toast*** библиотеку Javascript, для представления не блокирующих уведомлений . Цель состоит в том, чтобы создать базовую библиотеку, которую можно настраивать и расширять.
+### ✨ [Demo](https://react-toaster-lib-demo.netlify.app/)
 
-#### Необходимый функционал:
+## Install
 
-- Показать уведомление.
-- Возможность устанавливать положению уведомления.
-- Возможность устанавливать тип уведомления (уведомления об успехе, ошибке, оповещение и т.д.).
-- Возможность устанавливать длительность показа уведомления.
-- Возможность задавать заголовок и описание уведомления.
-- Возможность устанавливать отступы уведомления.
-- Возможность изменять цвет типа уведомлений.
-- Возможность изменять анимацию появления и исчезновения.
+```sh
+npm install react-toaster-lib
+```
 
-#### Дополнительный функционал:
+## Usage:
 
-- Возможность "смахивать" уведомления в сторону для быстрого закрытия.
-- Показ до 3 уведомлений одновременно.
+Add container component to your App:
+```js
+import { ToastContainer } from "react-toaster-lib";
+...
+<ToastContainer />
+```
+Container has default position "top-right", but you could use the next variants:
+```js
+<ToastContainer position="top-left"/>
+<ToastContainer position="top-center"/>
+<ToastContainer /> //default position="top-right"
+<ToastContainer position="bottom-left"/>
+<ToastContainer position="bottom-center"/>
+<ToastContainer position="bottom-right"/>
+```
 
-#### Пример графического представления:
+To create a Toast: import "toaster" library instance and use its addToast() method:
+```js
+import { toaster } from "react-toaster-lib";
+toaster.addToast("Toast text");//minimum params required
+toaster.addToast(
+  "Some text to show (required)",
+   "Toast header (optional)",
+  {
+    type: "success", //"default" (predefined) | "info" | "success" | "warning" | "danger"
+    lifeTime: 2000, // time in milliseconds, if used - toast will automatically close in this time
+    animationType: "ease", //"ease" |"ease-in" | "ease-out" | "ease-in-out" (predefined) |
+    // "linear" | "step-start" | "step-end" | "cubic-bezier"
+    showFrom: "left", // "left" | "right" | "top" | "bottom"
+    hideTo: "left", // "left" | "right" | "top" | "bottom"
+    bgColor: "#ffffff", //any valid color format
+    fontColor: "rgb(179, 56, 56)", //any valid color format
+    iconColor: "blue", //any valid color format
+    margin: "md lg sm 12", //use constants "md", "lg", "sm" and digits without "px"
+    padding: "md 7", //use constants "md", "lg", "sm" and digits without "px"
+  }
+)
+```
+The signature of **addToast** method is: **addToast(toastText [, toastHeader [, optionsObject]])**
+The single parameter required is **toastText**, other params are optional. You could use **optionsObj**
+as the second param if you do not need toast header.
 
-Ссылка на макет: [Макет "Toast"](https://xd.adobe.com/view/9efd755b-6a29-49bf-4e13-d5cd74643170-e8cc/). Также его можно найти в папке **doc** c расширением **.xd** для программы **Adobe XD**.
+addToast() **options** available:
+- **type** - Toast type determines its Icon type and default background, font and Icon colors
+types available: **"default"** (predefined) | **"info"** | **"success"** | **"warning"** | **"danger"**
+- **lifeTime** - time in milliseconds. If option not used or equals "0" - you could close Toast only manually
+by click on the cross or by swipe. If you use lifeTime with value > 0 (ms) - Toast will disappear automatically
+after time milliseconds
+- **animationType** - effect using on toast show / hide
+types available: **"ease"** | **"ease-in"** | **"ease-out"** | **"ease-in-out"** (predefined) | **"linear"**,
+**"step-start"**, **"step-end"**, **"cubic-bezier"** (use *cubic-bezier(0.1, 0.7, 1, 0.1)* function)
+- **showFrom** - determine where from Toast will appear on the screen
+types available: **"left"** | **"right"** | **"top"** | **"bottom"**
+*showFrom* param has predefined values according to *ToastContainer* positions: **"left"** if *ToastContainer*
+has "top-left" or "bottom-left" position, **"right"** if position is "top-right" or "bottom-right", **"top"** if
+position is "top-center" and **"bottom"** if position is "bottom-center"
+- **hideTo** - determine direction where Toast disappear from the screen.
+types available: **"left"** | **"right"** | **"top"** | **"bottom"**
+*hideTo* param has predefined values according to *ToastContainer* positions: **"left"** if *ToastContainer*
+has "top-left" or "bottom-left" position, **"right"** if position is "top-right" or "bottom-right", **"top"** if
+position is "top-center" and **"bottom"** if position is "bottom-center"
+- **bgColor** - custom background color, use any valid format. If not used or wrong value - library use default
+bg color according to Toast *type*
+- **fontColor** - custom font color, use any valid format. If not used or wrong value - library use default
+font color according to Toast *type*
+- **iconColor** - custom Icon color, use any valid format. If not used or wrong value - library use default
+Icon color according to Toast *type*
+- **margin** - set custom Toast margins - match standard CSS margin value (1-4 values divided with spaces),
+but you could use ONLY digits (without "px") and constants "sm" (=5px), "md" (=10px) or "lg"(=15px).
+- **padding** - set custom Toast paddings - match standard CSS padding value (1-4 values divided with spaces),
+but you could use ONLY digits (without "px") and constants "sm" (=5px), "md" (=10px) or "lg"(=15px).
 
-> ![example_1](https://github.com/slava-ovchinnikov/education-task-toast-lib/blob/master/doc/example_1.png?raw=true)
+### Swipe to remove Toast feature available
 
-#### Также проект предполагает:
-- Разделить библиотеку на два основных компонента: представления и логики. Для реализации логики приложения необходимо использовать порождающий паттерн программирования ***"Одиночка"***, который гарантирует, что у класса есть только один экземпляр, и предоставляет к нему глобальную точку доступа (см. подробнее [паттерн Одиночка](https://refactoring.guru/ru/design-patterns/singleton)). При помощи паттерна создать сервисный класс, в котором вы будете задавать конфигурацию и вызывать уведомление. Для реализация представления необходимо использовать **react portals**.
+## Author
 
-- Настроить конфигурации ***babel***, ***eslint***.
+👤 **treyer <nemereno_by@mail.ru>**
 
-- Подключить и настроить бандлер ***Rollup*** для сборки проекта в библиотеку.
+- Github: [@treyer](https://github.com/treyer)
+- LinkedIn: [@Andrei Кazhanenka](https://linkedin.com/in/Andrei Кazhanenka)
 
-- Подключить и настроить ***Strorybook*** для проверки работоспособности вашей библиотеки.
-
-- Обработку ошибок через паттерн ***Error Boundaries***
-
-- Проверку типов в React компонентах, передаваемых параметров и подобных объектов.
-
-- Использование алиасов для импортирования файлов.
-
-## Используемые технологии
-
-### Для react
-- ***node.js*** - программная платформа, основанная на движке V8 (транслирующем JavaScript в машинный код).
-- ***babel*** - транспайлер, преобразующий код из одного стандарта в другой.
-- ***eslint*** - линтер для JavaScript кода.
-- ***yarn*** - менеджер пакетов.
-- ***rollup*** - сборщик ES-модулей.
-- ***stortbook*** - инструмент, используемый для разработки компонентов пользовательского интерфейса в изоляции.
-- ***react*** - JavaScript-библиотека для создания пользовательских интерфейсов.
-- ***prop-types*** - набор валидаторов, которые могут быть использованы для проверки получаемых данных.
-- ***styled-components*** - система стилизации react компонентов.
-- ***cypress*** — e2e тестирование для веб приложений.
-
- ### Для react native
-Will be soon...
-
-## Структура проекта
-
-Структура проекта должна быть реализована в том же стиле, что и в первом тестовом задании (см. [Структура проекта](https://github.com/slava-ovchinnikov/education-task-calculator#%D0%A1%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0)).
-
-## Тестирование
-
-Реализовать e2e тестирование c полным покрытием функционала приложения:
-- Сервис для конфигурации Toast-компонента.
-- Графическое (компонент модуля и т.д.)
-
-## Как начать
-
-Эта инструкция поможет вам сделать копию проекта и запустить его на вашей локальной машине для разработки и тестирования.
-
-### React/ReactNative
-
-#### Установка 
-
-Для того чтобы получить шаблон проекта, необходимо сделать следующее:
-
-1. Зарегистрировать аккаунт в github.
-2. Получить доступ к репозиторию с шаблоном.
-3. Импортировать шаблон в свой репозиторий.
-4. Склонировать репозиторий на свою локальную машину.
-
-> ![template_1](https://github.com/slava-ovchinnikov/education-task-calculator/blob/master/doc/template.png?raw=true)
-
-## Полезные ссылки
-
-[React](https://reactjs.org/docs/getting-started.html)
-
-[Rollup](https://rollupjs.org/guide/en/)
-
-[Storybook](https://storybook.js.org/docs/basics/introduction/)
-
-[Eslint](https://eslint.org/docs/user-guide/configuring)
-
-[Babel](https://babeljs.io/docs/en/configuration)
-
-[Тестирование Cypress](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell)
-
-[Тестирование Detox](https://github.com/wix/Detox/blob/master/docs/README.md)
-
-[Styled-components](https://www.styled-components.com/docs)
+Give a ⭐️ if this project helped you!
