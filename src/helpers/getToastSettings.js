@@ -9,8 +9,8 @@ import { fixOptions } from '@helpers/fixOptions.js'
 import { isObject } from '@helpers/isObject.js'
 import { fixToastType } from '@helpers/fixToastType.js'
 import { checkAndFixAnimationType } from '@helpers/checkAndFixAnimationType.js'
-import { checkAndFixColorOptions } from '@helpers/checkAndFixColorOptions'
-import { checkAndFixLifetime } from '@helpers/checkAndFixLifetime'
+import { checkAndFixColorOptions } from '@helpers/checkAndFixColorOptions.js'
+import { checkAndFixLifetime } from '@helpers/checkAndFixLifetime.js'
 
 const methodSignature =
   'addToast(toastText [, toastHeader [, optionsObject]])'
