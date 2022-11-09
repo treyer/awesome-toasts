@@ -38,6 +38,12 @@ Container has default position "top-right", but you could use the next variants:
 <ToastContainer position="bottom-right"/>
 ```
 
+By default <ToastContainer /> renders into div element with id="toasts-root" (it appends by library to document.body).
+But you could define your custom id for root element by using **rootId** ToastContainer attribute:
+```js
+<ToastContainer position="top-left" rootId="your-custom-id"/>
+```
+
 To create a Toast: import "toaster" library instance and use its addToast() method:
 ```js
 import { toaster } from "react-toaster-lib";
@@ -65,21 +71,21 @@ The single parameter required is **toastText**, other params are optional. You c
 as the second param if you do not need toast header.
 
 addToast() **options** available:
-- **type** - Toast type determines its Icon type and default background, font and Icon colors
-types available: **"default"** (predefined) | **"info"** | **"success"** | **"warning"** | **"danger"**
+- **type** - Toast type determines its Icon type and default background, font and Icon colors.
+Types available: **"default"** (predefined) | **"info"** | **"success"** | **"warning"** | **"danger"**
 - **lifeTime** - time in milliseconds. If option not used or equals "0" - you could close Toast only manually
 by click on the cross or by swipe. If you use lifeTime with value > 0 (ms) - Toast will disappear automatically
 after time milliseconds
-- **animationType** - effect using on toast show / hide
-types available: **"ease"** | **"ease-in"** | **"ease-out"** | **"ease-in-out"** (predefined) | **"linear"**,
+- **animationType** - effect using on toast show / hide.
+Types available: **"ease"** | **"ease-in"** | **"ease-out"** | **"ease-in-out"** (predefined) | **"linear"**,
 **"step-start"**, **"step-end"**, **"cubic-bezier"** (use *cubic-bezier(0.1, 0.7, 1, 0.1)* function)
-- **showFrom** - determine where from Toast will appear on the screen
-types available: **"left"** | **"right"** | **"top"** | **"bottom"**
+- **showFrom** - determine where from Toast will appear on the screen.
+Types available: **"left"** | **"right"** | **"top"** | **"bottom"** .
 *showFrom* param has predefined values according to *ToastContainer* positions: **"left"** if *ToastContainer*
 has "top-left" or "bottom-left" position, **"right"** if position is "top-right" or "bottom-right", **"top"** if
 position is "top-center" and **"bottom"** if position is "bottom-center"
 - **hideTo** - determine direction where Toast disappear from the screen.
-types available: **"left"** | **"right"** | **"top"** | **"bottom"**
+Types available: **"left"** | **"right"** | **"top"** | **"bottom"** .
 *hideTo* param has predefined values according to *ToastContainer* positions: **"left"** if *ToastContainer*
 has "top-left" or "bottom-left" position, **"right"** if position is "top-right" or "bottom-right", **"top"** if
 position is "top-center" and **"bottom"** if position is "bottom-center"
@@ -101,6 +107,6 @@ but you could use ONLY digits (without "px") and constants "sm" (=5px), "md" (=1
 👤 **treyer <nemereno_by@mail.ru>**
 
 - Github: [@treyer](https://github.com/treyer)
-- LinkedIn: [@Andrei Кazhanenka](https://linkedin.com/in/Andrei Кazhanenka)
+- LinkedIn: [@Andrei Кazhanenka](https://linkedin.com/in/kazhanenka)
 
 Give a ⭐️ if this project helped you!

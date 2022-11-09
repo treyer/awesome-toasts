@@ -1,8 +1,4 @@
-import React, {
-  useState,
-  useLayoutEffect,
-  useEffect,
-} from 'react'
+import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
@@ -18,31 +14,13 @@ import { POSITION_TYPE } from '@constants/positions.js'
 import toaster from '@/ToastService.jsx'
 
 function ToastContainer({ position, rootId }) {
-  const [rootElement, setRootElement] = useState(null)
+  let rootElement = document.getElementById(rootId)
+  if (!rootElement) rootElement = createRootElement(rootId)
 
   useEffect(() => {
     toaster.setContainerPosition(position)
     return () => toaster.setContainerPosition(null)
   }, [])
-
-  useLayoutEffect(() => {
-    let element = document.getElementById(rootId)
-    let systemCreated = false
-
-    if (!element) {
-      systemCreated = true
-      element = createRootElement(rootId)
-    }
-    setRootElement(element)
-
-    return () => {
-      if (systemCreated && element.parentNode) {
-        element.parentNode.removeChild(element)
-      }
-    }
-  }, [rootId])
-
-  if (rootElement === null) return null
 
   return ReactDOM.createPortal(
     <ErrorBoundary>
