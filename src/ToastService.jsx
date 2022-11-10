@@ -5,8 +5,11 @@ import { v4 as uuid } from 'uuid'
 import Toast from '@components/Toast/Toast.jsx'
 import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary.jsx'
 
-import { ROOT_CONTAINER_ID } from '@constants/common.js'
 import { getToastSettings } from '@helpers/getToastSettings.js'
+import { ROOT_CONTAINER_ID } from '@constants/common.js'
+import { ANIMATION_DURATION } from '@constants/common.js'
+import { TOAST_STATES } from '@constants/toastStates.js'
+import { ANIMATION_DIRECTIONS } from '@constants/animationDirections.js'
 
 class ToastService {
   constructor() {
@@ -29,28 +32,47 @@ class ToastService {
   }
 
   addToast(...args) {
-    const settings = getToastSettings(
+    const { text, headerText, options } = getToastSettings(
       args,
       this.containerPosition,
     )
-    if (settings) {
-      const { text, headerText, options } = settings
-      const toast = {
-        id: uuid(),
-        headerText,
-        text,
-        options,
+    const toast = {
+      id: uuid(),
+      state: TOAST_STATES.INIT,
+      timer: null,
+      headerText,
+      text,
+      options,
+    }
+    if (this.toasts.length < 3) {
+      this.toasts.push(toast)
+      this.renderToasts(this.hydrateToasts(this.toasts))
+    } else {
+      this.queue.push(toast)
+    }
+  }
+
+  initRemove(toastId) {
+    const toast = this.getToastById(toastId)
+    if (toast.state === TOAST_STATES.INIT) {
+      toast.state = TOAST_STATES.ON_REMOVE
+      if (toast.timer) {
+        clearTimeout(toast.timer)
+        toast.timer = null
       }
-      if (this.toasts.length < 3) {
-        this.toasts.push(toast)
-        this.renderToasts(this.hydrateToasts(this.toasts))
-      } else {
-        this.queue.push(toast)
-      }
+      const timer = setTimeout(() => {
+        this.removeToast(toastId)
+      }, ANIMATION_DURATION - 50)
+      toast.timer = timer
+      this.renderToasts(this.hydrateToasts(this.toasts))
     }
   }
 
   removeToast(toastId) {
+    const toast = this.getToastById(toastId)
+    if (toast.timer) {
+      clearTimeout(toast.timer)
+    }
     this.toasts = this.toasts.filter(
       el => el.id !== toastId,
     )
@@ -60,24 +82,44 @@ class ToastService {
     this.renderToasts(this.hydrateToasts(this.toasts))
   }
 
-  setToastStatus(toastId, state) {
-    this.toasts.map(el => {
-      if (el.id === toastId) el.toastState = state
-      return el
+  activateToastTimers = toasts => {
+    toasts.forEach(toast => {
+      if (!toast.timer) {
+        if (toast.options.lifeTime > 0) {
+          const timer = setTimeout(() => {
+            this.initRemove(toast.id)
+          }, toast.options.lifeTime + ANIMATION_DURATION)
+          toast.timer = timer
+        }
+      }
     })
   }
 
   hydrateToasts(toasts) {
+    this.activateToastTimers(toasts)
     return (
       <ErrorBoundary>
         {toasts.map(toast => {
+          const { lifeTime, showFrom, hideTo, ...rest } =
+            toast.options
+
           return (
             <Toast
               key={toast.id}
               id={toast.id}
               headerText={toast.headerText}
               text={toast.text}
-              {...toast.options}
+              animationName={
+                toast.state === TOAST_STATES.INIT
+                  ? showFrom
+                  : hideTo
+              }
+              animationDirection={
+                toast.state === TOAST_STATES.INIT
+                  ? ANIMATION_DIRECTIONS.NORMAL
+                  : ANIMATION_DIRECTIONS.REVERSE
+              }
+              {...rest}
             />
           )
         })}

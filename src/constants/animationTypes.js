@@ -4,8 +4,6 @@ export const ANIMATION_TYPES = {
   EASE_OUT: 'ease-out',
   EASE_IN_OUT: 'ease-in-out',
   LINEAR: 'linear',
-  STEP_START: 'step-start',
-  STEP_END: 'step-end',
   CUBIC_BEZIER: 'cubic-bezier',
 }
 

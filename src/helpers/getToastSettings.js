@@ -1,4 +1,3 @@
-import { TOAST_STATE } from '@constants/toastStates.js'
 import { TOAST_TYPE_COLORS } from '@constants/colors.js'
 import { TOAST_TYPE } from '@constants/toastTypes.js'
 import { INDENTS } from '@constants/indents.js'
@@ -25,7 +24,6 @@ export const getToastSettings = (
 
   const defaultOptions = {
     lifeTime: 0,
-    toastState: TOAST_STATE.WILL_APPEAR,
     type: TOAST_TYPE.DEFAULT,
     showFrom,
     hideTo,

@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { ANIMATION_DURATION_IN_SEC } from '@constants/common.js'
+
 export const ToastWrapper = styled.div`
   position: relative;
 
@@ -17,32 +19,60 @@ export const ToastWrapper = styled.div`
   transform: translateX(
     ${({ positionDiff }) => positionDiff}px
   );
-  transition: all 250ms
-    ${({ animationType }) => animationType};
+
+  animation-name: ${({ animationName }) => animationName};
+  animation-duration: ${ANIMATION_DURATION_IN_SEC}s;
+  animation-timing-function: ${({ animationType }) =>
+    animationType};
+  animation-direction: ${({ animationDirection }) =>
+    animationDirection};
 
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
 
-  &[data-show='left'].hidden,
-  &[data-hide='left'].hidden {
-    transform: translateX(-120%);
-    opacity: 0.6;
+  @keyframes left {
+    from {
+      transform: translateX(-120%);
+      opacity: 0.6;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
   }
-  &[data-show='right'].hidden,
-  &[data-hide='right'].hidden {
-    transform: translateX(120%);
-    opacity: 0.6;
+
+  @keyframes right {
+    from {
+      transform: translateX(120%);
+      opacity: 0.6;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
   }
-  &[data-show='top'].hidden,
-  &[data-hide='top'].hidden {
-    transform: translateY(-120%);
-    opacity: 0.6;
+
+  @keyframes top {
+    from {
+      transform: translateY(-120%);
+      opacity: 0.6;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
   }
-  &[data-show='bottom'].hidden,
-  &[data-hide='bottom'].hidden {
-    transform: translateY(120%);
-    opacity: 0.6;
+
+  @keyframes bottom {
+    from {
+      transform: translateY(120%);
+      opacity: 0.6;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
   }
 `
 

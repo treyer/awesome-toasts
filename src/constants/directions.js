@@ -11,3 +11,5 @@ export const HIDE_TO = {
   TOP: 'top',
   BOTTOM: 'bottom',
 }
+
+export const DIRECTIONS = ['left', 'right', 'top', 'bottom']

@@ -1,4 +1,4 @@
-export const TOAST_STATE = {
-  WILL_APPEAR: 'appear',
-  SHOWN: 'shown',
+export const TOAST_STATES = {
+  INIT: 'init',
+  ON_REMOVE: 'onRemove',
 }
