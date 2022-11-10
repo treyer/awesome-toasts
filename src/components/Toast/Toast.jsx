@@ -12,7 +12,7 @@ import {
   ToastWrapper,
 } from './components'
 
-import toaster from '@/ToastService.jsx'
+import toaster from '@/ToastService.js'
 import { getPositionX } from '@helpers/getPositionX.js'
 import { TOAST_TYPE } from '@constants/toastTypes.js'
 import {

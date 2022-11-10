@@ -7,7 +7,7 @@ import { SHOW_FROM, HIDE_TO } from '@constants/directions'
 import { POSITION_TYPE } from '@constants/positions'
 import { ANIMATION_TYPES } from '@constants/animationTypes'
 import ToastContainer from '@components/ToastContainer/ToastContainer'
-import toaster from '@/ToastService.jsx'
+import toaster from '@/ToastService.js'
 
 export default {
   title: 'Components/Toast',

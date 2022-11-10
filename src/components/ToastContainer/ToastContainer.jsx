@@ -11,16 +11,20 @@ import {
 } from '@constants/common.js'
 import { createRootElement } from '@helpers/createRootElement.js'
 import { POSITION_TYPE } from '@constants/positions.js'
-import toaster from '@/ToastService.jsx'
+import toaster from '@/ToastService.js'
 
 function ToastContainer({ position, rootId }) {
   let rootElement = document.getElementById(rootId)
   if (!rootElement) rootElement = createRootElement(rootId)
 
   useEffect(() => {
+    toaster.updateRenderRoot()
+  }, [])
+
+  useEffect(() => {
     toaster.setContainerPosition(position)
     return () => toaster.setContainerPosition(null)
-  }, [])
+  }, [position])
 
   return ReactDOM.createPortal(
     <ErrorBoundary>
@@ -34,14 +38,7 @@ function ToastContainer({ position, rootId }) {
 }
 
 ToastContainer.propTypes = {
-  position: PropTypes.oneOf([
-    POSITION_TYPE.TOP_RIGHT,
-    POSITION_TYPE.TOP_CENTER,
-    POSITION_TYPE.TOP_LEFT,
-    POSITION_TYPE.BOTTOM_RIGHT,
-    POSITION_TYPE.BOTTOM_CENTER,
-    POSITION_TYPE.BOTTOM_LEFT,
-  ]),
+  position: PropTypes.oneOf(Object.values(POSITION_TYPE)),
   rootId: PropTypes.string,
 }
 

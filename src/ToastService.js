@@ -15,7 +15,6 @@ class ToastService {
   constructor() {
     this.toasts = []
     this.queue = []
-    this.root = null
     this.renderRoot = null
     this.containerPosition = null
   }
@@ -58,7 +57,6 @@ class ToastService {
       toast.state = TOAST_STATES.ON_REMOVE
       if (toast.timer) {
         clearTimeout(toast.timer)
-        toast.timer = null
       }
       const timer = setTimeout(() => {
         this.removeToast(toastId)
@@ -128,23 +126,17 @@ class ToastService {
   }
 
   renderToasts(hydratedToasts) {
-    if (!this.root) {
-      this.root = document.getElementById(ROOT_CONTAINER_ID)
-      this.renderRoot = ReactDOM.createRoot(this.root)
-    } else {
-      const currentRoot = document.getElementById(
-        ROOT_CONTAINER_ID,
-      )
-      if (currentRoot !== this.root) {
-        this.root = currentRoot
-        this.renderRoot = ReactDOM.createRoot(this.root)
-      }
-    }
     this.renderRoot.render(hydratedToasts)
   }
 
   setContainerPosition(position) {
     this.containerPosition = position
+  }
+
+  updateRenderRoot() {
+    this.renderRoot = ReactDOM.createRoot(
+      document.getElementById(ROOT_CONTAINER_ID),
+    )
   }
 }
 
