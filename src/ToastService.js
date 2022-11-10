@@ -1,15 +1,11 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { v4 as uuid } from 'uuid'
-
-import Toast from '@components/Toast/Toast.jsx'
-import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary.jsx'
 
 import { getToastSettings } from '@helpers/getToastSettings.js'
 import { ROOT_CONTAINER_ID } from '@constants/common.js'
 import { ANIMATION_DURATION } from '@constants/common.js'
 import { TOAST_STATES } from '@constants/toastStates.js'
-import { ANIMATION_DIRECTIONS } from '@constants/animationDirections.js'
+import { hydrateToasts } from '@helpers/hydrateToasts.jsx'
 
 class ToastService {
   constructor() {
@@ -45,7 +41,8 @@ class ToastService {
     }
     if (this.toasts.length < 3) {
       this.toasts.push(toast)
-      this.renderToasts(this.hydrateToasts(this.toasts))
+      this.activateToastTimers(this.toasts)
+      this.renderToasts(hydrateToasts(this.toasts))
     } else {
       this.queue.push(toast)
     }
@@ -62,7 +59,7 @@ class ToastService {
         this.removeToast(toastId)
       }, ANIMATION_DURATION - 50)
       toast.timer = timer
-      this.renderToasts(this.hydrateToasts(this.toasts))
+      this.renderToasts(hydrateToasts(this.toasts))
     }
   }
 
@@ -77,7 +74,8 @@ class ToastService {
     if (this.queue.length > 0) {
       this.toasts.push(this.queue.shift())
     }
-    this.renderToasts(this.hydrateToasts(this.toasts))
+    this.activateToastTimers(this.toasts)
+    this.renderToasts(hydrateToasts(this.toasts))
   }
 
   activateToastTimers = toasts => {
@@ -91,38 +89,6 @@ class ToastService {
         }
       }
     })
-  }
-
-  hydrateToasts(toasts) {
-    this.activateToastTimers(toasts)
-    return (
-      <ErrorBoundary>
-        {toasts.map(toast => {
-          const { lifeTime, showFrom, hideTo, ...rest } =
-            toast.options
-
-          return (
-            <Toast
-              key={toast.id}
-              id={toast.id}
-              headerText={toast.headerText}
-              text={toast.text}
-              animationName={
-                toast.state === TOAST_STATES.INIT
-                  ? showFrom
-                  : hideTo
-              }
-              animationDirection={
-                toast.state === TOAST_STATES.INIT
-                  ? ANIMATION_DIRECTIONS.NORMAL
-                  : ANIMATION_DIRECTIONS.REVERSE
-              }
-              {...rest}
-            />
-          )
-        })}
-      </ErrorBoundary>
-    )
   }
 
   renderToasts(hydratedToasts) {
