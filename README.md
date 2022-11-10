@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to react-toaster-lib 👋</h1>
+<h1 >Welcome to react-toaster-lib 👋</h1>
 <p>
   <a href="https://www.npmjs.com/package/react-toaster-lib" target="_blank">
     <img alt="Version" src="https://img.shields.io/npm/v/react-toaster-lib.svg">
@@ -54,8 +54,7 @@ toaster.addToast(
   {
     type: "success", //"default" (predefined) | "info" | "success" | "warning" | "danger"
     lifeTime: 2000, // time in milliseconds, if used - toast will automatically close in this time
-    animationType: "ease", //"ease" |"ease-in" | "ease-out" | "ease-in-out" (predefined) |
-    // "linear" | "step-start" | "step-end" | "cubic-bezier"
+    animationType: "ease", //"ease" |"ease-in" | "ease-out" | "ease-in-out" (predefined) | "linear" | "cubic-bezier"
     showFrom: "left", // "left" | "right" | "top" | "bottom"
     hideTo: "left", // "left" | "right" | "top" | "bottom"
     bgColor: "#ffffff", //any valid color format
@@ -78,7 +77,7 @@ by click on the cross or by swipe. If you use lifeTime with value > 0 (ms) - Toa
 after time milliseconds
 - **animationType** - effect using on toast show / hide.
 Types available: **"ease"** | **"ease-in"** | **"ease-out"** | **"ease-in-out"** (predefined) | **"linear"**,
-**"step-start"**, **"step-end"**, **"cubic-bezier"** (use *cubic-bezier(0.1, 0.7, 1, 0.1)* function)
+ **"cubic-bezier"** (use *cubic-bezier(0.1, 0.7, 1, 0.1)* function)
 - **showFrom** - determine where from Toast will appear on the screen.
 Types available: **"left"** | **"right"** | **"top"** | **"bottom"** .
 *showFrom* param has predefined values according to *ToastContainer* positions: **"left"** if *ToastContainer*

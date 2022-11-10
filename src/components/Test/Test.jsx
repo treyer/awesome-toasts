@@ -7,7 +7,7 @@ import { POSITION_TYPE } from '@constants/positions'
 import { SHOW_FROM, HIDE_TO } from '@constants/directions'
 import { TOAST_TYPE } from '@constants/toastTypes'
 
-function Test() {
+function Test({ position = POSITION_TYPE.TOP_CENTER }) {
   const count = useRef(0)
 
   const [isContainerShown, setIsContainerShown] =
@@ -59,9 +59,7 @@ function Test() {
         Add Toast With Lifecycle
       </button>
       {isContainerShown && (
-        <ToastContainer
-          position={POSITION_TYPE.TOP_CENTER}
-        />
+        <ToastContainer position={position} />
       )}
     </React.Fragment>
   )

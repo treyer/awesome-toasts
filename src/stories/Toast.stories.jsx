@@ -29,11 +29,6 @@ export default {
         disable: true,
       },
     },
-    toastState: {
-      table: {
-        disable: true,
-      },
-    },
     text: {
       control: { type: 'text' },
     },
@@ -86,6 +81,16 @@ export default {
     padding: {
       control: { type: 'text' },
     },
+    animationName: {
+      table: {
+        disable: true,
+      },
+    },
+    animationDirection: {
+      table: {
+        disable: true,
+      },
+    },
     animationType: {
       options: [
         ANIMATION_TYPES.EASE,
@@ -93,8 +98,6 @@ export default {
         ANIMATION_TYPES.EASE_OUT,
         ANIMATION_TYPES.EASE_IN_OUT,
         ANIMATION_TYPES.LINEAR,
-        ANIMATION_TYPES.STEP_START,
-        ANIMATION_TYPES.STEP_END,
         ANIMATION_TYPES.CUBIC_BEZIER,
       ],
       control: { type: 'select' },
